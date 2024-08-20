@@ -19,6 +19,8 @@ struct PageView: View {
         }
         .padding(.leading).background(backgroundColor)
         .frame(maxWidth: .infinity, alignment: .leading)
+        TextView(value: .constant(TextData()))
+        TextView(value: .constant(TextData()))
         Spacer()
     }
 }
