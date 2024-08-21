@@ -13,14 +13,23 @@ struct PageView: View {
     var backgroundColor = Color(.appBackground)
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("Page Title")
                 .font(.title).padding(.top)
+            ScrollView {
+                Grid(alignment: .top) {
+                    GridRow{
+                        TextView()
+                    }
+                    GridRow{
+                        TextView()
+                    }
+                    // .gridCellUnsizedAxes([.horizontal, .vertical])
+                }
+            }
         }
-        .padding(.leading).background(backgroundColor)
+        .padding(.horizontal).background(backgroundColor)
         .frame(maxWidth: .infinity, alignment: .leading)
-        TextView()
-        Spacer()
     }
 }
 
