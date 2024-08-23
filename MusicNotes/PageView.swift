@@ -43,12 +43,26 @@ struct PageView: View {
         }
         .padding(.horizontal).background(backgroundColor)
         .frame(maxWidth: .infinity, alignment: .leading)
+        .onAppear(){
+            // TODO: See practices on best place
+            requestRecordPermission()
+        }
+        
+    }
+    
+    func requestRecordPermission() {
+        Task { @MainActor in
+            AVAudioApplication.requestRecordPermission() { wasCompleted in
+                if wasCompleted {
+                    print("Granted")
+                } else {
+                    print("Denied")
+                }
+            }
+        }
     }
     
     private func addTextData() {
-        
-        print("Added new Card Label")
-        
         withAnimation {
             let newTextData = TextData()
             context.insert(newTextData)
