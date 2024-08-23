@@ -10,60 +10,64 @@ import SwiftData
 import SwiftUI
 
 struct TextView: View {
+    @Bindable var textData: TextData
+        
     var placeHolderText = "Write Something!"
-    @State private var fullText: String = ""
     
     @State private var containsPlaceHolderText: Bool = false
     
-    @State private var fontSize: CGFloat = FontSize.medium.rawValue // Default font size
     var body: some View {
         GroupBox {
             VStack(alignment: .leading) {
-                TextEditor(text: $fullText)
-                    .font(.system(size: fontSize))
+                TextEditor(text: $textData.text)
+                    .font(.system(size: textData.fontSize.value))
                     .scrollContentBackground(.hidden)
                     .background(.clear)
                     .foregroundColor(
                         Color.primary
                             .opacity(containsPlaceHolderText ? 0.7 : 1)
                     )
+                // TODO: Add deleting if null at closure?
                     .onTapGesture {
                         if containsPlaceHolderText {
-                            fullText = ""
+                            textData.text = ""
+                            containsPlaceHolderText = false
                         }
-                    }.onChange(of: fullText) { newValue in
-                        containsPlaceHolderText = (newValue == placeHolderText)
-                        // TODO: Add having placeholder back
                     }
+                // TODO: Add having placeholder back
                 HStack {
                     ForEach(FontSize.allCases, id: \.self) { fs in
                         Button {
-                            fontSize = fs.rawValue
+                            textData.fontSize = fs
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 4)
-                                    .foregroundColor(fontSize == fs.rawValue ? .accentA : .clear)
+                                    .foregroundColor(textData.fontSize.value == fs.value ? .accentA : .clear)
                                     .frame(width: 20, height: 24)
                                 Text("A")
-                                    .foregroundColor(fontSize == fs.rawValue ? .appBackground : .accentA)
-                                    .font(.system(size: fs.rawValue, weight: .medium, design: .rounded))
+                                    .foregroundColor(textData.fontSize.value == fs.value ? .appBackground : .accentA)
+                                    .font(.system(size: fs.value, weight: .medium, design: .rounded))
                                     .frame(width: 20, height: 24, alignment: .center)
                             }
                         }
                     }
                 }
                 .frame(maxWidth: .infinity,  alignment: .center)
-                .onAppear {
-                    fullText = placeHolderText
-                    containsPlaceHolderText = placeHolderText == fullText
+                .onAppear{
+                    let originalFs = textData.fontSize
+                    textData.fontSize = .small
+                    textData.fontSize = originalFs
+                    if(textData.text == ""){
+                        textData.text = "Start writing!"
+                        containsPlaceHolderText = true
+                    }
                 }
             }
         }
     }
 }
 
-struct TextView_Previews : PreviewProvider {
-    static var previews: some View {
-        TextView()
-    }
+#Preview {
+    let preview = Preview(TextData.self)
+    return TextView(textData: TextData.sampleTextData[4])
 }
