@@ -8,11 +8,10 @@
 import SwiftUI
 import SwiftData
 
-
 struct PageView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \TextData.dateCreated) private var textsData: [TextData]
-        
+    
     var backgroundColor = Color(.appBackground)
     
     var body: some View {
@@ -34,32 +33,21 @@ struct PageView: View {
                         .frame(minHeight: 100)
                     }
                 }
-            }.frame(maxHeight: .infinity)
+            }.frame(maxHeight: 400)
             Button(action: addTextData) {
                 Label("", systemImage: "plus.circle.fill")
                      .foregroundColor(.accentA)
+                    // TODO: Look for not font (built-in) way to do it
+                     .font(.system(size: 40))
+
             }
+            
+            // TODO: Change for mock AudioData
+            AudioView(audioRecordingURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
             
         }
         .padding(.horizontal).background(backgroundColor)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .onAppear(){
-            // TODO: See practices on best place
-            requestRecordPermission()
-        }
-        
-    }
-    
-    func requestRecordPermission() {
-        Task { @MainActor in
-            AVAudioApplication.requestRecordPermission() { wasCompleted in
-                if wasCompleted {
-                    print("Granted")
-                } else {
-                    print("Denied")
-                }
-            }
-        }
     }
     
     private func addTextData() {

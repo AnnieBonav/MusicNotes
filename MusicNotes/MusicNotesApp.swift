@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import AVFoundation
 
 @main
 struct MusicNotesApp: App {
@@ -20,8 +21,8 @@ struct MusicNotesApp: App {
     }
     
     init(){
-        let schema = Schema([TextData.self])
-        let config = ModelConfiguration("TextData", schema: schema)
+        let schema = Schema([TextData.self, AudioData.self])
+        let config = ModelConfiguration("NotesData", schema: schema)
         do {
             container = try ModelContainer(for: schema, configurations: config)
         } catch {
