@@ -13,23 +13,26 @@ struct AudioRecordingView: View {
     @Bindable var audioRecordingData: AudioRecordingData
     
     @State private var audioPlayer: AVAudioPlayer?
+    
+    // TODO: Decide if should be injected
+    let currentDocumentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    
     @State var isPlaying: Bool = false
     
     var body: some View {
         GroupBox(label: Label {
-            Text(audioRecordingData.dateCreated, style: .date)
+            Text(audioRecordingData.dateCreated.formatted(date: .abbreviated, time: .shortened))
         } icon: {
             Image(systemName: "music.quarternote.3")
         }) {
-            if (audioRecordingData.title != nil) {
-                // TODO: Check why ! is needed if check was made
-                Text(audioRecordingData.title!)
+            if let title = audioRecordingData.title {
+                Text(title)
                     .font(.title3)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            if (audioRecordingData.details != nil) {
-                Text(audioRecordingData.details!)
+            if let details = audioRecordingData.details {
+                Text(details)
                     .font(.caption)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -49,22 +52,66 @@ struct AudioRecordingView: View {
         }
     }
     
+    // TODO: Decide if other audios should be paused when something played
     func playRecording(){
-        // TODO: Check if something else is playing?
-        do {
-            if let audioURL = URL(string: audioRecordingData.urlString){
-                audioPlayer = try AVAudioPlayer(contentsOf: audioURL)
-                audioPlayer?.play()
-            }
-        } catch {
-            print("Couldn't initialize AV Audio Player. URL: \(audioRecordingData.urlString)")
+        guard let audioPlayerInitialized = audioPlayer
+        else{
+            initializePlaying()
+            // TODO: Check if could be cleaner (not use audioPlayer directly)
+            audioPlayer?.play()
+            isPlaying = true
+            return
+        }
+        
+        if(!audioPlayerInitialized.isPlaying){
+            audioPlayerInitialized.play()
+            isPlaying = true
+        }else{
+            audioPlayerInitialized.pause()
+            isPlaying = false
         }
     }
     
     func rewindRecording(){
-        // TODO: Implement rewinding
+        guard let audioPlayerInitialized = audioPlayer
+        else{
+            print("ERROR: audioPlayer is nil in rewindRecording")
+            return
+        }
+        
+        audioPlayerInitialized.currentTime = 0
     }
     
+    func initializePlaying(verbose: Bool = false){
+        guard let audioURL = URL(string: "\(currentDocumentPath)\(audioRecordingData.urlString)")
+        else{
+            print("ERROR: Audio URL could not be initialized")
+            return
+        }
+        
+        if (!FileManager.default.fileExists(atPath: audioURL.path)) {
+            print("ERROR: File does not exist at URL \(audioURL.path)")
+            return
+        }
+        
+        if (verbose) { print("Audio URL: \(audioURL)\n") }
+        
+        do {
+            let isReachable = try audioURL.checkResourceIsReachable()
+        }
+        catch {
+            print("Error reaching audioURL: \(error)")
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: audioURL)
+            
+            // TODO: Check if prepareToPlay is needed
+            audioPlayer!.prepareToPlay()
+        } catch {
+            print("Error initializing AVAudioPlayer: \(error)")
+        }
+    }
 }
 
 #Preview {

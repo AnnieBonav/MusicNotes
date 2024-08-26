@@ -30,8 +30,7 @@ struct PageView: View {
                      .font(.system(size: 40))
             }
             
-            // TODO: Change for mock AudioData
-            AudioView(audioRecordingURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
+            AudioView()
             
         }
         .padding(.horizontal).background(.appBackground)

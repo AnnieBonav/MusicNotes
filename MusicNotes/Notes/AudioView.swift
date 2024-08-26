@@ -11,7 +11,6 @@ import AVFAudio
 struct AudioView: View {
     @Environment(\.modelContext) var context
     @State private var audioRecorder: AVAudioRecorder?
-    @State private var audioPlayer: AVAudioPlayer?
     
     @State private var recordingSettings: [String: Any] = [
         AVFormatIDKey: kAudioFormatMPEG4AAC,
@@ -21,24 +20,19 @@ struct AudioView: View {
     ]
     
     // TODO: Change recording URL to take the data from AudioData instance
-    @State var audioRecordingURL: URL
+    @State private var audioRecordingURL: URL?
     
     var body: some View {
         GroupBox(label: Label("Audio will be nice :)", systemImage: "building.columns")
             ){
             HStack{
-                Button(action: startRecording) {
+                Button(action: { startRecording() }) {
                     Label("", systemImage: "record.circle.fill")
                          .foregroundColor(.accentA)
                 }
                 
-                Button(action: endRecording) {
+                Button(action: { endRecording() }) {
                     Label("", systemImage: "stop.fill")
-                         .foregroundColor(.accentA)
-                }
-                
-                Button(action: playRecording) {
-                    Label("", systemImage: "play.fill")
                          .foregroundColor(.accentA)
                 }
             }
@@ -58,17 +52,17 @@ struct AudioView: View {
         }
     }
     
-    func startRecording(){
+    func startRecording(verbose: Bool = false){
         if (recorderPrepared()){
-            print("Started recording")
             audioRecorder?.record()
+            if (verbose) { print("AudioView: Started recording") }
         }
     }
     
     private func recorderPrepared() -> Bool {
         do {
-            audioRecordingURL = getFileName(verbose: true)
-            audioRecorder = try AVAudioRecorder(url: audioRecordingURL, settings: recordingSettings)
+            audioRecordingURL = getNewFileName(verbose: true)
+            audioRecorder = try AVAudioRecorder(url: audioRecordingURL!, settings: recordingSettings)
             audioRecorder?.prepareToRecord()
             
             return true
@@ -79,52 +73,31 @@ struct AudioView: View {
         }
     }
     
-    func endRecording(){
-        print("Ended recording")
+    func endRecording(verbose: Bool = false){
         audioRecorder?.stop()
+        if (verbose) { print("AudioView: Ended recording") }
         
-        context.insert(AudioRecordingData(urlString: audioRecordingURL.absoluteString))
+        context.insert(AudioRecordingData(urlString: audioRecordingURL!.lastPathComponent))
     }
     
-    func getFileName(verbose: Bool = false) -> URL {
+    func getNewFileName(verbose: Bool = false) -> URL {
+        
         let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         
         // ORIGINAL: MusicNotes_2024-08-24 18:15:50 +0000.m4a
         var fileName = "MusicNotes_\(Date.now).m4a"
         
-        // FINAL: MusicNotes_2024-08-24_18:16:43_0000.m4a
-        fileName = fileName.replacingOccurrences(of: " ", with: "_").replacingOccurrences(of: "+", with: "")
+        // FINAL: MusicNotes_2024-08-24_18-16-43_0000.m4a
+        fileName = fileName.replacingOccurrences(of: " ", with: "_").replacingOccurrences(of: "+", with: "").replacingOccurrences(of: ":", with: "-")
         
         let audioFilenameURL: URL = documentPath.appendingPathComponent(fileName)
         
-        if verbose { print(audioFilenameURL)}
+        if verbose { print("Generated File Name: \(audioFilenameURL)") }
         
         return audioFilenameURL
-    }
-    
-    func playRecording() {
-        // TODO: Add getting correct URL from AudioView component
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: audioRecordingURL)
-            audioPlayer?.play()
-        } catch {
-            print("couldn't load the file")
-        }
-    }
-    
-    func requestRecordPermission() {
-        Task { @MainActor in
-            AVAudioApplication.requestRecordPermission() { wasCompleted in
-                if wasCompleted {
-                    print("Granted")
-                } else {
-                    print("Denied")
-                }
-            }
-        }
     }
 }
 
 #Preview {
-    AudioView(audioRecordingURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]) // audioData: AudioData.sampleAudioData[-1]
+    AudioView()
 }
