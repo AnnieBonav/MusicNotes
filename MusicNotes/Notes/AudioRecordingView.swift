@@ -11,14 +11,14 @@ import SwiftData
 
 struct AudioRecordingView: View {
     @Bindable var audioRecordingData: AudioRecordingData
-    
     @State private var audioPlayer: AVAudioPlayer?
+    @ObservedObject private var playerDelegate = AudioPlayerDelegate()
     
     // TODO: Decide if should be injected
     let currentDocumentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     
-    @State var isPlaying: Bool = false
-    
+    @State var sliderValue : Double = 0
+            
     var body: some View {
         GroupBox(label: Label {
             Text(audioRecordingData.dateCreated.formatted(date: .abbreviated, time: .shortened))
@@ -29,6 +29,7 @@ struct AudioRecordingView: View {
                 Text(title)
                     .font(.title3)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 1)
             }
             
             if let details = audioRecordingData.details {
@@ -37,20 +38,30 @@ struct AudioRecordingView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            ProgressView(value: 0.4, total: 1)
+            Slider(value: $sliderValue, in: 0...100)
                 .tint(.accentA).padding(.top)
+                
             HStack{
                 Button(action: rewindRecording) {
                     Label("", systemImage: "backward.end.circle.fill")
                         .foregroundColor(.accentA)
+                        .font(.title)
                 }
                 Button(action: { playRecording() }) {
-                    Label("", systemImage: isPlaying ? "pause.fill" : "play.fill")
+                    Label("", systemImage: playerDelegate.isPlaying ? "pause.fill" : "play.fill")
                         .foregroundColor(.accentA)
+                        .font(.title)
                 }
             }
+        }.onChange(of: playerDelegate.currentTime){ newTimeValue in
+            handleTimeChange(newTimeValue: newTimeValue)
         }
     }
+    
+    func handleTimeChange(newTimeValue: TimeInterval){
+        sliderValue = newTimeValue * 100 / audioPlayer!.duration
+    }
+
     
     // TODO: Decide if other audios should be paused when something played
     func playRecording(verbose: Bool = false){
@@ -59,17 +70,19 @@ struct AudioRecordingView: View {
             initializePlaying()
             // TODO: Check if could be cleaner (not use audioPlayer directly)
             audioPlayer?.play()
-            isPlaying = true
+            playerDelegate.startTimer(audioPlayer: audioPlayer!)
+            playerDelegate.isPlaying = true
             return
         }
         
         if(!audioPlayerInitialized.isPlaying){
             audioPlayerInitialized.play()
-            isPlaying = true
+            playerDelegate.startTimer(audioPlayer: audioPlayer!)
+            playerDelegate.isPlaying = true
             if (verbose) { print("IS Playing") }
         }else{
             audioPlayerInitialized.pause()
-            isPlaying = false
+            playerDelegate.isPlaying = false
             if (verbose) { print("NOT Playing") }
         }
     }
@@ -110,6 +123,7 @@ struct AudioRecordingView: View {
             
             // TODO: Check if prepareToPlay is needed
             audioPlayer!.prepareToPlay()
+            audioPlayer!.delegate = playerDelegate
         } catch {
             print("Error initializing AVAudioPlayer: \(error)")
         }

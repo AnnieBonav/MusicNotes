@@ -21,19 +21,16 @@ struct AudioView: View {
     
     // TODO: Change recording URL to take the data from AudioData instance
     @State private var audioRecordingURL: URL?
+    @State private var isRecording: Bool = false
     
     var body: some View {
-        GroupBox(label: Label("Audio will be nice :)", systemImage: "building.columns")
+        GroupBox(label: Label("Record New Audio :)", systemImage: "building.columns")
             ){
             HStack{
-                Button(action: { startRecording() }) {
-                    Label("", systemImage: "record.circle.fill")
+                Button(action: { record() }) {
+                    Label("", systemImage: isRecording ? "stop.fill" : "record.circle.fill")
                          .foregroundColor(.accentA)
-                }
-                
-                Button(action: { endRecording() }) {
-                    Label("", systemImage: "stop.fill")
-                         .foregroundColor(.accentA)
+                         .font(.title)
                 }
             }
         }.onAppear(){
@@ -53,10 +50,20 @@ struct AudioView: View {
         }
     }
     
-    func startRecording(verbose: Bool = false){
+    func record(){
+        if(!isRecording){
+            startRecording()
+        }else{
+            endRecording()
+        }
+    }
+    
+    private func startRecording(verbose: Bool = false){
         if (recorderPrepared()){
             audioRecorder?.record()
-            if (verbose) { print("AudioView: Started recording") }
+            isRecording = true
+            if (verbose) { print("AudioView: Started recording")
+            }
         }
     }
     
@@ -76,6 +83,7 @@ struct AudioView: View {
     
     func endRecording(verbose: Bool = false){
         audioRecorder?.stop()
+        isRecording = false
         if (verbose) { print("AudioView: Ended recording") }
         
         context.insert(AudioRecordingData(urlString: audioRecordingURL!.lastPathComponent))
