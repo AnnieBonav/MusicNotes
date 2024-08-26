@@ -21,7 +21,7 @@ struct MusicNotesApp: App {
     }
     
     init(){
-        let schema = Schema([TextData.self, AudioData.self])
+        let schema = Schema([TextData.self, AudioRecordingData.self])
         let config = ModelConfiguration("NotesData", schema: schema)
         do {
             container = try ModelContainer(for: schema, configurations: config)

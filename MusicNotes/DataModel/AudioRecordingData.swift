@@ -10,17 +10,20 @@ import AVFAudio
 import SwiftData
 
 @Model
-final class AudioData {
+final class AudioRecordingData {
+    var id: UUID
     var dateCreated: Date
     var title: String?
     var details: String?
     var urlString: String
     
-    init(dateCreated: Date = Date.now,
+    init(id: UUID = UUID(),
+         dateCreated: Date = Date.now,
          title: String? = nil,
          details: String? = nil,
          urlString: String
     ) {
+        self.id = id
         self.dateCreated = dateCreated
         self.title = title
         self.details = details

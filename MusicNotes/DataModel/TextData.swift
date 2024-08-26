@@ -10,16 +10,20 @@ import SwiftData
 
 @Model
 final class TextData {
+    var id: UUID
     var dateCreated: Date
     var lastModified: Date
     var text: String
     var fontSize: FontSize
     
-    init(dateCreated: Date = Date.now,
+    init(id: UUID = UUID(),
+         dateCreated: Date = Date.now,
          lastModified: Date = Date.now,
-         text: String = "",
+         // TODO: Choose if there can be a no-text TextData or if it is automatically removed
+         text: String = "I am missing some text!",
          fontSize: FontSize = .medium
     ) {
+        self.id = id
         self.dateCreated = dateCreated
         self.lastModified = lastModified
         self.text = text
@@ -35,11 +39,11 @@ enum FontSize: String, Codable, CaseIterable {
     var value: CGFloat {
         switch self {
         case .small:
-            return 12.0  // Example size for small font
+            return 12.0
         case .medium:
-            return 16.0  // Example size for medium font
+            return 16.0
         case .large:
-            return 20.0  // Example size for large font
+            return 20.0
         }
     }
 }

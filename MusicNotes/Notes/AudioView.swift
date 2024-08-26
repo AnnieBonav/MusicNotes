@@ -83,7 +83,7 @@ struct AudioView: View {
         print("Ended recording")
         audioRecorder?.stop()
         
-        context.insert(AudioData(urlString: audioRecordingURL.absoluteString))
+        context.insert(AudioRecordingData(urlString: audioRecordingURL.absoluteString))
     }
     
     func getFileName(verbose: Bool = false) -> URL {
