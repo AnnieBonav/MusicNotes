@@ -44,7 +44,7 @@ struct AudioRecordingView: View {
                     Label("", systemImage: "backward.end.circle.fill")
                         .foregroundColor(.accentA)
                 }
-                Button(action: playRecording) {
+                Button(action: { playRecording() }) {
                     Label("", systemImage: isPlaying ? "pause.fill" : "play.fill")
                         .foregroundColor(.accentA)
                 }
@@ -53,7 +53,7 @@ struct AudioRecordingView: View {
     }
     
     // TODO: Decide if other audios should be paused when something played
-    func playRecording(){
+    func playRecording(verbose: Bool = false){
         guard let audioPlayerInitialized = audioPlayer
         else{
             initializePlaying()
@@ -66,9 +66,11 @@ struct AudioRecordingView: View {
         if(!audioPlayerInitialized.isPlaying){
             audioPlayerInitialized.play()
             isPlaying = true
+            if (verbose) { print("IS Playing") }
         }else{
             audioPlayerInitialized.pause()
             isPlaying = false
+            if (verbose) { print("NOT Playing") }
         }
     }
     
@@ -111,6 +113,8 @@ struct AudioRecordingView: View {
         } catch {
             print("Error initializing AVAudioPlayer: \(error)")
         }
+        
+        if (verbose) { print("Initialized Audio Player. File: \(audioPlayer!.url)") }
     }
 }
 

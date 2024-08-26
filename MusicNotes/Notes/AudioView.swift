@@ -43,10 +43,11 @@ struct AudioView: View {
     
     private func setupAudioSession() {
         do {
-            // TODO: understand more what this is for
+            // TODO: understand more about settings
             let audioSession = AVAudioSession.sharedInstance()
             try audioSession.setCategory(.playAndRecord, mode: .default)
             try audioSession.setActive(true)
+            try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
         } catch {
             print("OOPS, something failed creating the audio Session")
         }
