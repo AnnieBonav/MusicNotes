@@ -18,7 +18,7 @@ struct AudioRecordingView: View {
     let currentDocumentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     
     @State var sliderValue : Double = 0
-            
+    
     var body: some View {
         GroupBox(label: Label {
             Text(audioRecordingData.dateCreated.formatted(date: .abbreviated, time: .shortened))
@@ -38,7 +38,20 @@ struct AudioRecordingView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            Slider(value: $sliderValue, in: 0...100)
+            Slider(value: $sliderValue, in: 0...100, onEditingChanged: { editing in
+                // Handle pausing while moving slider
+                var wasPlaying = playerDelegate.isPlaying
+                if (editing) {
+                    if (wasPlaying) {
+                        audioPlayer!.pause()
+                    }
+                }else{
+                    handleSliderChange()
+                    if (wasPlaying){
+                        audioPlayer!.play()
+                    }
+                }
+            })
                 .tint(.accentA).padding(.top)
                 
             HStack{
@@ -54,14 +67,19 @@ struct AudioRecordingView: View {
                 }
             }
         }.onChange(of: playerDelegate.currentTime){ newTimeValue in
-            handleTimeChange(newTimeValue: newTimeValue)
+            handleTimeChange(currentTime: newTimeValue)
         }
+        // TODO: Change so when timer ends playerDelegate go backs to beginning (can be inside Delegate)
     }
     
-    func handleTimeChange(newTimeValue: TimeInterval){
-        sliderValue = newTimeValue * 100 / audioPlayer!.duration
+    func handleSliderChange() {
+        let newTime = sliderValue * audioPlayer!.duration / 100
+        playerDelegate.rewindTo(audioPlayer: audioPlayer!, time: newTime)
     }
-
+    
+    func handleTimeChange(currentTime: TimeInterval){
+        sliderValue = currentTime * 100 / audioPlayer!.duration
+    }
     
     // TODO: Decide if other audios should be paused when something played
     func playRecording(verbose: Bool = false){
@@ -93,8 +111,7 @@ struct AudioRecordingView: View {
             print("ERROR: audioPlayer is nil in rewindRecording")
             return
         }
-        
-        audioPlayerInitialized.currentTime = 0
+        playerDelegate.rewindTo(audioPlayer: audioPlayerInitialized, time: 0)
     }
     
     func initializePlaying(verbose: Bool = false){
@@ -112,7 +129,7 @@ struct AudioRecordingView: View {
         if (verbose) { print("Audio URL: \(audioURL)\n") }
         
         do {
-            let isReachable = try audioURL.checkResourceIsReachable()
+            _ = try audioURL.checkResourceIsReachable()
         }
         catch {
             print("Error reaching audioURL: \(error)")
@@ -133,5 +150,10 @@ struct AudioRecordingView: View {
 }
 
 #Preview {
-    return AudioRecordingView(audioRecordingData: AudioRecordingData.sampleAudioData[4])
+    let preview = Preview(AudioRecordingData.self)
+    let audioRecordingData = AudioRecordingData.sampleAudioData
+    preview.addExamples(audioRecordingData)
+    
+    return AudioRecordingView(audioRecordingData: audioRecordingData[4])
+        .modelContainer(preview.container)
 }

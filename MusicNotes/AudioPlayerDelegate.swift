@@ -25,6 +25,20 @@ class AudioPlayerDelegate: NSObject, AVAudioPlayerDelegate, ObservableObject {
         }
     }
     
+    func rewindTo(audioPlayer: AVAudioPlayer, time: TimeInterval) {
+        var newTime: Double
+        if(time <= 0){
+            newTime = 0
+        }else if (time < audioPlayer.duration){
+            newTime = time
+        }else{
+            newTime = audioPlayer.duration
+        }
+        
+        audioPlayer.currentTime = newTime
+        self.currentTime = newTime
+    }
+    
     func stopTimer() {
         timer?.invalidate()
         timer = nil
