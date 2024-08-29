@@ -10,20 +10,19 @@ import SwiftData
 
 @Model
 final class TextData {
-    var id: UUID
     var dateCreated: Date
     var lastModified: Date
     var text: String
     var fontSize: FontSize
     
-    init(id: UUID = UUID(),
-         dateCreated: Date = Date.now,
-         lastModified: Date = Date.now,
+    init(
+        dateCreated: Date = Date.now,
+        lastModified: Date = Date.now,
+        
          // TODO: Choose if there can be a no-text TextData or if it is automatically removed
          text: String = "I am missing some text!",
          fontSize: FontSize = .medium
     ) {
-        self.id = id
         self.dateCreated = dateCreated
         self.lastModified = lastModified
         self.text = text

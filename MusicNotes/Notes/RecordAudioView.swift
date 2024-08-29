@@ -1,5 +1,5 @@
 //
-//  AudioView.swift
+//  RecordAudioView.swift
 //  MusicNotes
 //
 //  Created by Ana Bonavides Aguilar on 8/23/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import AVFAudio
 
-struct AudioView: View {
+struct RecordAudioView: View {
     @Environment(\.modelContext) var context
     @State private var audioRecorder: AVAudioRecorder?
     
@@ -108,5 +108,5 @@ struct AudioView: View {
 }
 
 #Preview {
-    AudioView()
+    RecordAudioView()
 }

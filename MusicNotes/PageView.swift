@@ -55,8 +55,9 @@ struct PageView: View {
 }
 
 #Preview {
-    let preview = Preview(TextData.self)
+    let preview = Preview(TextData.self, AudioRecordingData.self)
     preview.addExamples(TextData.sampleTextData)
+    preview.addExamples(AudioRecordingData.sampleAudioData)
     return PageView()
         .modelContainer(preview.container)
 }

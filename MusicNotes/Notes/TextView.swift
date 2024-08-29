@@ -69,5 +69,9 @@ struct TextView: View {
 
 #Preview {
     let preview = Preview(TextData.self)
-    return TextView(textData: TextData.sampleTextData[4])
+    let textsData = TextData.sampleTextData
+    preview.addExamples(textsData)
+    
+    return TextView(textData: textsData[4])
+        .modelContainer(preview.container)
 }
