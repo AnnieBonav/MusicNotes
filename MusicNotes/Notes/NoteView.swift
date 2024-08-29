@@ -22,15 +22,20 @@ struct NoteView: View {
     }
 }
 
-#Preview {
-    let preview = Preview(TextData.self, AudioRecordingData.self)
+// Preview does not work
+/* #Preview {
+    let preview = Preview(NoteData.self)
     let textsData = TextData.sampleTextData
     let audioRecordingsData = AudioRecordingData.sampleAudioData
     
-    preview.addExamples(textsData)
-    preview.addExamples(audioRecordingsData)
+    var mockNotes: [NoteData] = [NoteData]()
+    mockNotes.append(NoteData(notePosition: 0, textData: textsData[4]))
+    mockNotes.append(NoteData(notePosition: 2, textData: textsData[1]))
+    mockNotes.append(NoteData(notePosition: 1, audioRecordingData: audioRecordingsData[4]))
+    
+    let mockNoteData = NoteData(notePosition: 0, textData: TextData())
     
     // Only the last not nil value of NoteData init() will be rendered(either textData or audioRecordingData with current implementation)
-    return NoteView(noteData: NoteData(notePosition: 0, textData: textsData[4], audioRecordingData: audioRecordingsData[4]))
+    return NoteView(noteData: mockNoteData)
         .modelContainer(preview.container)
-}
+}*/

@@ -17,7 +17,7 @@ struct NotesList: View {
                 ForEach(notesData){noteData in
                     GridRow{
                         NoteView(noteData: noteData)
-                    }
+                    }.frame(minHeight: 100)
                 }
             }
         }
@@ -40,5 +40,4 @@ struct NotesList: View {
     preview.addExamples(mockNotes)
     return NotesList()
         .modelContainer(preview.container)
-    return TextView(textData: textsData[4])
 }

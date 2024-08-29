@@ -21,8 +21,7 @@ struct PageView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         
         VStack {
-//            TextsList()
-            AudioRecordingsList()
+            NotesList()
             Button(action: addTextData) {
                 Label("", systemImage: "plus.circle.fill")
                      .foregroundColor(.accentA)
@@ -30,11 +29,13 @@ struct PageView: View {
                      .font(.system(size: 40))
             }
             
-            AudioView()
+            RecordAudioView()
             
         }
         .padding(.horizontal).background(.appBackground)
         .frame(maxWidth: .infinity, alignment: .leading)
+        
+        Spacer()
     }
     
     // TODO: Check if handling CRUD here is best
@@ -55,9 +56,20 @@ struct PageView: View {
 }
 
 #Preview {
-    let preview = Preview(TextData.self, AudioRecordingData.self)
-    preview.addExamples(TextData.sampleTextData)
-    preview.addExamples(AudioRecordingData.sampleAudioData)
+    let preview = Preview(TextData.self, AudioRecordingData.self, NoteData.self)
+    
+    let textsData = TextData.sampleTextData
+    let audioRecordingsData = AudioRecordingData.sampleAudioData
+    
+    var mockNotes: [NoteData] = [NoteData]()
+    mockNotes.append(NoteData(notePosition: 0, textData: textsData[4]))
+    mockNotes.append(NoteData(notePosition: 2, textData: textsData[1]))
+    mockNotes.append(NoteData(notePosition: 1, audioRecordingData: audioRecordingsData[4]))
+    
+    preview.addExamples(textsData)
+    preview.addExamples(audioRecordingsData)
+    preview.addExamples(mockNotes)
+    
     return PageView()
         .modelContainer(preview.container)
 }

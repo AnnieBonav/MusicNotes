@@ -16,12 +16,11 @@ enum NoteType: String, CaseIterable, Codable {
 
 @Model
 final class NoteData { // Will take the last data that was chosen as noteType
+    var notePosition: Int
     var noteType: NoteType
     
     var textData: TextData?
     var audioRecordingData: AudioRecordingData?
-    
-    var notePosition: Int
     
     init(notePosition: Int,
          textData: TextData? = nil,
