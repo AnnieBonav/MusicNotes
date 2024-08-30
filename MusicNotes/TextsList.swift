@@ -8,21 +8,34 @@
 import SwiftUI
 import SwiftData
 
+struct NoteBackground: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: 8)
+            .foregroundColor(.appBackground)
+            .background(.ultraThickMaterial)
+    }
+}
+
 struct TextsList: View {
     @Query(sort: \TextData.dateCreated) private var textsData: [TextData]
     
     var body: some View {
-        ScrollView {
-            Grid(alignment: .top) {
-                ForEach(textsData) { textData in
-                    GridRow{
+        VStack{
+            List{
+                Section(content: {
+                    ForEach(textsData) { textData in
                         TextView(textData: textData)
                     }
-                    // TODO: Fix bug so it can automatically be resized (and does not start without showing text)
-                    .frame(minHeight: 100)
-                }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(NoteBackground())
+                }, header: {
+                    Text("I am a title")
+                        .font(.title)
+                })
             }
-        }.frame(maxHeight: 400)
+            .listRowSpacing(10)
+            .scrollContentBackground(.hidden)
+        }.frame(maxWidth: .infinity)
     }
 }
 

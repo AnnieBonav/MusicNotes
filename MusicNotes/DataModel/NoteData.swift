@@ -22,7 +22,7 @@ final class NoteData { // Will take the last data that was chosen as noteType
     var textData: TextData?
     var audioRecordingData: AudioRecordingData?
     
-    init(notePosition: Int,
+    init(notePosition: Int = Int.min,
          textData: TextData? = nil,
          audioRecordingData: AudioRecordingData? = nil) {
         

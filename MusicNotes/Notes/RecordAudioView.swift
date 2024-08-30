@@ -7,9 +7,12 @@
 
 import SwiftUI
 import AVFAudio
+import SwiftData
 
 struct RecordAudioView: View {
     @Environment(\.modelContext) var context
+    @Query(sort: \NoteData.notePosition) private var notesData: [NoteData]
+
     @State private var audioRecorder: AVAudioRecorder?
     
     @State private var recordingSettings: [String: Any] = [
@@ -86,7 +89,10 @@ struct RecordAudioView: View {
         isRecording = false
         if (verbose) { print("AudioView: Ended recording") }
         
-        context.insert(AudioRecordingData(urlString: audioRecordingURL!.lastPathComponent))
+        let newAudioRecordingData = AudioRecordingData(urlString: audioRecordingURL!.lastPathComponent)
+        let note = NoteData(notePosition: notesData.count, audioRecordingData: newAudioRecordingData)
+        
+        context.insert(note)
     }
     
     func getNewFileName(verbose: Bool = false) -> URL {

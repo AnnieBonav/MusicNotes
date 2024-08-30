@@ -57,13 +57,19 @@ struct TextView: View {
                     let originalFs = textData.fontSize
                     textData.fontSize = .small
                     textData.fontSize = originalFs
+                    
                     if(textData.text == ""){
                         textData.text = "Start writing!"
+                    }
+                    if(textData.text == "Start writing!"){
                         containsPlaceHolderText = true
                     }
+                    
+                    textData.fontSize = .small
                 }
             }
         }
+        .background(.clear)
     }
 }
 

@@ -20,7 +20,7 @@ final class TextData {
         lastModified: Date = Date.now,
         
          // TODO: Choose if there can be a no-text TextData or if it is automatically removed
-         text: String = "I am missing some text!",
+         text: String = "Start writing!",
          fontSize: FontSize = .medium
     ) {
         self.dateCreated = dateCreated
