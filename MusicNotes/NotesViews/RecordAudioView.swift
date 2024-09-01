@@ -5,10 +5,8 @@ import SwiftData
 // View currently shown on PageView to record new Audio
 struct RecordAudioView: View {
     @Environment(\.modelContext) var context
-    @Query(sort: \NoteData.notePosition) private var notesData: [NoteData]
 
     @State private var audioRecorder: AVAudioRecorder?
-    
     @State private var recordingSettings: [String: Any] = [
         AVFormatIDKey: kAudioFormatMPEG4AAC,
         AVSampleRateKey: 12000,
@@ -19,14 +17,14 @@ struct RecordAudioView: View {
     @State private var audioRecordingURL: URL?
     @State private var isRecording: Bool = false
     
+    @State var pageData: PageData
+    
     var body: some View {
-        Text("Record New Audio :)")
-            .font(.callout)
         HStack{
             Button(action: { record() }) {
                 Label("", systemImage: isRecording ? "stop.fill" : "record.circle.fill")
                      .foregroundColor(.accentA)
-                     .font(.title)
+                     .font(.largeTitle)
             }
         }.onAppear(){
             setupAudioSession()
@@ -81,8 +79,7 @@ struct RecordAudioView: View {
         if (verbose) { print("AudioView: Ended recording") }
         
         let newAudioRecordingData = AudioRecordingData(urlString: audioRecordingURL!.lastPathComponent)
-        let note = NoteData(notePosition: notesData.count, audioRecordingData: newAudioRecordingData)
-        
+        let note = NoteData(notePosition: pageData.notesData.count, audioRecordingData: newAudioRecordingData)
         context.insert(note)
     }
     
@@ -105,5 +102,8 @@ struct RecordAudioView: View {
 }
 
 #Preview {
-    RecordAudioView()
+    var preview = Preview(PageData.self)
+    var mockPageData = PageData()
+    
+    return RecordAudioView(pageData: mockPageData)
 }

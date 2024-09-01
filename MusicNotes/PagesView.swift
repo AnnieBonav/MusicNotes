@@ -7,45 +7,51 @@ struct PagesView: View {
     
     var body: some View {
         NavigationStack{
-            Group{
+            Group {
                 if(pages.isEmpty) {
-                    ContentUnavailableView{
-                        Label("You have nowhere to write yet", systemImage: "note.text")
-                    } description: {
-                        Text("Start with a new Page!").font(.title)
-                    } actions: {
-                        Button {
-                            addPage()
-                        } label: {
-                            Label("New Page", systemImage: "plus.circle.fill")
+                    VStack{
+                        ContentUnavailableView{
+                            Label("You have nowhere to write yet", systemImage: "note.text")
+                        } description: {
+                            Text("Start with a new Page!").font(.title)
+                        } actions: {
+                            Button {
+                                addPage()
+                            } label: {
+                                Label("New Page", systemImage: "plus.circle.fill")
+                            }
+                            .buttonStyle(.bordered)
+                            .buttonBorderShape(.capsule)
+                            .controlSize(.large)
+                            .font(.title2)
+                            .tint(.accentA)
+                            .padding(.bottom)
                         }
-                        .buttonStyle(.bordered)
-                        .buttonBorderShape(.capsule)
-                        .controlSize(.large)
-                        .font(.title2)
-                        .tint(.accentA)
-                        .padding(.bottom)
                     }
                 }else{
-                    PagesList()
-                        .toolbar {
-                            ToolbarItemGroup(placement: .bottomBar) {
-                                Spacer()
-                                Button("Press Me", systemImage: "plus.circle.fill") {
-                                    addPage()
-                                }
-                                .buttonStyle(.bordered)
-                                .controlSize(.large)
-                                .buttonBorderShape(.circle)
-                                .font(.largeTitle)
-                                .tint(.accentA)
-                                .foregroundColor(.accentA)
+                    VStack{
+                        PagesList()
+                        HStack{
+                            Spacer()
+                            Button{
+                                addPage()
+                            } label: {
+                                Label("", systemImage: "plus.circle.fill")
+                                    .foregroundColor(.appBackground)
+                                    .font(.largeTitle)
                             }
+                            Spacer()
                         }
+                        .padding(.top)
+                        .background(.accentA)
+                        .frame(maxWidth: .infinity)
+                        .ignoresSafeArea()
+                    }.frame(maxWidth: .infinity)
                 }
             }
-            .navigationTitle("Pages")
-        }.background(.accentA)
+            .navigationTitle("All Pages")
+            .background(.appBackground)
+        }
     }
     
     private func addPage(){

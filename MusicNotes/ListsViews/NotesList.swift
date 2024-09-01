@@ -4,6 +4,7 @@ import SwiftData
 // Is the overall render of all NotesTypes. Serves as body of a single app Page.
 struct NotesList: View {
     @Query(sort: \NoteData.notePosition) var notesData: [NoteData]
+    @State var pageId: PersistentIdentifier
     let columnLayout = Array(repeating: GridItem(), count: 1)
     
     var body: some View {
@@ -11,35 +12,39 @@ struct NotesList: View {
             List{
                 Section(content: {
                     ForEach(notesData){noteData in
-                    NoteView(noteData: noteData)
+                        NoteView(noteData: noteData, textData: noteData.textData, audioRecordingData: noteData.audioRecordingData)
                     }
+                    .onDelete(perform: { indexSet in
+                        print("Deleting")
+                    })
                     .listRowSeparator(.hidden)
                     .listRowBackground(NoteBackground())
-                }, header: {
-                    Text("I am a title")
-                        .font(.title)
                 })
             }
             .listRowSpacing(10)
             .scrollContentBackground(.hidden)
-        }.frame(maxWidth: .infinity)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 #Preview {
-    let preview = Preview(NoteData.self)
-    let textsData = TextData.sampleTextData
-    let audioRecordingsData = AudioRecordingData.sampleAudioData
+    var preview = Preview(PageData.self)
+    var mockPageData = PageData.mockPageData[0]
     
-    preview.addExamples(textsData)
-    preview.addExamples(audioRecordingsData)
+    var mockNotes =
+        [
+            NoteData(notePosition: 0, textData: TextData(), audioRecordingData: AudioRecordingData(urlString: "")),
+            NoteData(notePosition: 2, textData: nil, audioRecordingData: AudioRecordingData(urlString: "")),
+            NoteData(notePosition: 1, textData: TextData(), audioRecordingData: AudioRecordingData(urlString: "")),
+            NoteData(notePosition: 3, textData: TextData(), audioRecordingData: AudioRecordingData(urlString: "")),
+            NoteData(notePosition: 4, textData: nil, audioRecordingData: AudioRecordingData(urlString: ""))
+        ]
+    mockPageData.notesData = mockNotes
+    preview.addExamples([mockPageData])
     
-    var mockNotes: [NoteData] = [NoteData]()
-    mockNotes.append(NoteData(notePosition: 0, textData: textsData[4]))
-    mockNotes.append(NoteData(notePosition: 1, textData: textsData[1]))
-    mockNotes.append(NoteData(notePosition: 2, audioRecordingData: audioRecordingsData[4]))
-    
-    preview.addExamples(mockNotes)
-    return NotesList()
+    return NotesList(pageId: mockPageData.id)
         .modelContainer(preview.container)
+//    return NotesList(notesData: [NoteData(notePosition: 0, textData: TextData()), NoteData(notePosition: 1, audioRecordingData: AudioRecordingData(urlString: ""))])
 }

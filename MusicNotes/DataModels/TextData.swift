@@ -32,7 +32,7 @@ final class TextData: ObservableObject, Identifiable {
 }
 
 enum FontSize: String, Codable, CaseIterable {
-    case small, medium, large, huge
+    case small, medium, large
     
     var value: CGFloat {
         switch self {
@@ -42,8 +42,6 @@ enum FontSize: String, Codable, CaseIterable {
             return 16.0
         case .large:
             return 20.0
-        case .huge:
-            return 30.0
         }
     }
 }

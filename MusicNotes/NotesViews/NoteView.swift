@@ -1,17 +1,21 @@
 import SwiftUI
 
-// Shows NoteData and handles calling either TextView or AudioRecordingView according to the noteData. If noteData is nil, it currenly shows an EmptyView.
+// Shows NoteData and handles calling either TextView or AudioRecordingView according to the noteData. If noteData is nil, it currenly shows an Text for debugging.
 struct NoteView: View {
-    var noteData: NoteData
+    @State var noteData: NoteData
+    @State var textData: TextData?
+    @State var audioRecordingData: AudioRecordingData?
     
     var body: some View {
-        switch noteData.noteType {
-            case .text:
-                TextView(textData: noteData.textData!)
-            case .audioRecording:
-                AudioRecordingView(audioRecordingData: noteData.audioRecordingData!)
-            case .none:
-                Text("Text")
+        VStack{
+            switch noteData.noteType {
+                case .text:
+                TextView(textData: textData!) // TextView(textData: noteData.textData!) fails
+                case .audioRecording:
+                AudioRecordingView(audioRecordingData: audioRecordingData!)
+                case .none:
+                    Text("Debugging Text")
+            }
         }
     }
 }

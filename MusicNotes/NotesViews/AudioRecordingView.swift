@@ -14,11 +14,13 @@ struct AudioRecordingView: View {
     @State var sliderValue : Double = 0
     
     var body: some View {
-        GroupBox(label: Label {
-            Text(audioRecordingData.dateCreated.formatted(date: .abbreviated, time: .shortened))
-        } icon: {
-            Image(systemName: "music.quarternote.3")
-        }) {
+        VStack(alignment: .leading){
+            Label {
+                Text(audioRecordingData.dateCreated.formatted(date: .abbreviated, time: .shortened))
+            } icon: {
+                Image(systemName: "music.quarternote.3")
+            }
+            
             if let title = audioRecordingData.title {
                 Text(title)
                     .font(.title3)
@@ -60,7 +62,9 @@ struct AudioRecordingView: View {
                         .font(.title)
                 }
             }
-        }.onChange(of: playerDelegate.currentTime){oldTimeValue, newTimeValue in
+        }
+        .background(.clear)
+        .onChange(of: playerDelegate.currentTime){oldTimeValue, newTimeValue in
             handleTimeChange(currentTime: newTimeValue)
         }
         // TODO: Change so when timer ends playerDelegate go backs to beginning (can be inside Delegate)

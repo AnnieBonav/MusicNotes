@@ -3,9 +3,9 @@ import SwiftData
 
 struct PageBackground: View {
     var body: some View {
-        RoundedRectangle(cornerRadius: 8)
+        RoundedRectangle(cornerRadius: 0)
             .foregroundColor(.accentA.opacity(0.1))
-            .background(.ultraThickMaterial)
+            .background(.ultraThinMaterial)
     }
 }
 
@@ -24,11 +24,12 @@ struct PagesList: View {
                     } label:{
                         VStack(alignment: .leading){
                             Text(page.title)
-                                .font(.title)
-                                .padding(.top)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .padding(.top, 8)
                             Text(page.dateCreated.formatted(date: .abbreviated, time: .shortened))
                                 .font(.subheadline)
-                                .padding(.bottom)
+                                .padding(.bottom, 4)
                         }
                     }.tint(.primary)
                 }
@@ -37,12 +38,12 @@ struct PagesList: View {
                     savedIndexSet = indexSet
                     deletePage()
                 }
-                .listRowSeparator(.hidden)
                 .listRowBackground(PageBackground())
             })
-            .listRowSpacing(10)
-            .scrollContentBackground(.hidden)
+            .listRowSpacing(20)
+            .listRowSeparatorTint(.white)
         }
+        .scrollContentBackground(.hidden)
     }
     
     private func deletePage() {

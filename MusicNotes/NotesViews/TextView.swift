@@ -8,6 +8,7 @@ struct TextView: View {
         
     var placeHolderText = "Write Something!"
     @State private var containsPlaceHolderText: Bool = false
+    @State private var isEditing = false
     
     var body: some View {
         VStack{
@@ -28,47 +29,42 @@ struct TextView: View {
                         }
                     }
                 // TODO: Add having placeholder back
-                HStack {
-                    Button {
-                        textData.fontSize = FontSize.medium
-                        print("Setting to fontSize \(FontSize.medium)")
-                    } label: {
-                        Text("Annie")
-                    }
-                    ForEach(FontSize.allCases, id: \.self) { fontSize in
-                        Button {
-                            if textData.fontSize != fontSize {
-                                textData.fontSize = fontSize
-                                print("Setting to fontSize \(fontSize)")
+                if(isEditing){
+                    HStack {
+                        ForEach(FontSize.allCases, id: \.self) { fontSize in
+                            Button {
+                                if textData.fontSize != fontSize {
+                                    textData.fontSize = fontSize
+                                    print("Setting to fontSize \(fontSize)")
+                                }
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .foregroundColor(textData.fontSize.value == fontSize.value ? .accentA : .clear)
+                                        .frame(width: 20, height: 24)
+                                    Text("A")
+                                        .foregroundColor(textData.fontSize.value == fontSize.value ? .appBackground : .accentA)
+                                        .font(.system(size: fontSize.value, weight: .medium, design: .rounded))
+                                        .frame(width: 20, height: 24, alignment: .center)
+                                }
                             }
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 4)
-                                    .foregroundColor(textData.fontSize.value == fontSize.value ? .accentA : .clear)
-                                    .frame(width: 20, height: 24)
-                                Text("A")
-                                    .foregroundColor(textData.fontSize.value == fontSize.value ? .appBackground : .accentA)
-                                    .font(.system(size: fontSize.value, weight: .medium, design: .rounded))
-                                    .frame(width: 20, height: 24, alignment: .center)
-                            }
-                        }
-                    }.background(.pink)
-                }
-                .frame(maxWidth: .infinity,  alignment: .center)
-                .onAppear{
-                    let originalFs = textData.fontSize
-                    textData.fontSize = .small
-                    textData.fontSize = originalFs
-                    
-                    if(textData.text == ""){
-                        textData.text = "Start writing!"
+                        }.background(.gray.opacity(0.3))
                     }
-                    if(textData.text == "Start writing!"){
-                        containsPlaceHolderText = true
-                    }
-                    
-                    textData.fontSize = .small
+                    .frame(maxWidth: .infinity,  alignment: .center)
                 }
+            }.onAppear{
+                let originalFs = textData.fontSize
+                textData.fontSize = .medium
+                textData.fontSize = originalFs
+                
+                if(textData.text == ""){
+                    textData.text = "Start writing!"
+                }
+                if(textData.text == "Start writing!"){
+                    containsPlaceHolderText = true
+                }
+                
+                textData.fontSize = .medium
             }
         }
         .background(.clear)
