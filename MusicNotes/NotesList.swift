@@ -1,13 +1,7 @@
-//
-//  NotesList.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/27/24.
-//
-
 import SwiftUI
 import SwiftData
 
+// Is the overall render of all NotesTypes. Serves as body of a single app Page.
 struct NotesList: View {
     @Query(sort: \NoteData.notePosition) var notesData: [NoteData]
     let columnLayout = Array(repeating: GridItem(), count: 1)

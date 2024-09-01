@@ -1,14 +1,8 @@
-//
-//  RecordAudioView.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/23/24.
-//
-
 import SwiftUI
 import AVFAudio
 import SwiftData
 
+// View currently shown on PageView to record new Audio
 struct RecordAudioView: View {
     @Environment(\.modelContext) var context
     @Query(sort: \NoteData.notePosition) private var notesData: [NoteData]
@@ -22,19 +16,17 @@ struct RecordAudioView: View {
         AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
     ]
     
-    // TODO: Change recording URL to take the data from AudioData instance
     @State private var audioRecordingURL: URL?
     @State private var isRecording: Bool = false
     
     var body: some View {
-        GroupBox(label: Label("Record New Audio :)", systemImage: "building.columns")
-            ){
-            HStack{
-                Button(action: { record() }) {
-                    Label("", systemImage: isRecording ? "stop.fill" : "record.circle.fill")
-                         .foregroundColor(.accentA)
-                         .font(.title)
-                }
+        Text("Record New Audio :)")
+            .font(.callout)
+        HStack{
+            Button(action: { record() }) {
+                Label("", systemImage: isRecording ? "stop.fill" : "record.circle.fill")
+                     .foregroundColor(.accentA)
+                     .font(.title)
             }
         }.onAppear(){
             setupAudioSession()
@@ -43,7 +35,6 @@ struct RecordAudioView: View {
     
     private func setupAudioSession() {
         do {
-            // TODO: understand more about settings
             let audioSession = AVAudioSession.sharedInstance()
             try audioSession.setCategory(.playAndRecord, mode: .default)
             try audioSession.setActive(true)

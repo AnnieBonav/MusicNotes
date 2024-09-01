@@ -1,29 +1,20 @@
-//
-//  AudioData.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/23/24.
-//
-
 import Foundation
 import AVFAudio
 import SwiftData
 
+// AudioRecordingData is a type of Note that can have a title, details, and saves the urlString of the recorded Audio. The urlString is the name of the file, the rest is currently retrieved in every run, since each build generates a different path.
 @Model
 final class AudioRecordingData {
-    var id: UUID
     var dateCreated: Date
     var title: String?
     var details: String?
     var urlString: String
     
-    init(id: UUID = UUID(),
-         dateCreated: Date = Date.now,
+    init(dateCreated: Date = Date.now,
          title: String? = nil,
          details: String? = nil,
          urlString: String
     ) {
-        self.id = id
         self.dateCreated = dateCreated
         self.title = title
         self.details = details

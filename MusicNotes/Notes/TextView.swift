@@ -1,14 +1,8 @@
-//
-//  TextView.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/19/24.
-//
-
 import Foundation
 import SwiftData
 import SwiftUI
 
+// Shows the TextData with an edit field and handles interactions like size change.
 struct TextView: View {
     @Bindable var textData: TextData
         

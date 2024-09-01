@@ -1,12 +1,6 @@
-//
-//  NoteView.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/27/24.
-//
-
 import SwiftUI
 
+// Shows NoteData and handles calling either TextView or AudioRecordingView according to the noteData. If noteData is nil, it currenly shows an EmptyView.
 struct NoteView: View {
     var noteData: NoteData
     
@@ -16,26 +10,19 @@ struct NoteView: View {
                 TextView(textData: noteData.textData!)
             case .audioRecording:
                 AudioRecordingView(audioRecordingData: noteData.audioRecordingData!)
-            case .notDefined:
-                Text("Not defined")
+            case .none:
+                Text("Text")
         }
     }
 }
 
-// Preview does not work
-/* #Preview {
-    let preview = Preview(NoteData.self)
-    let textsData = TextData.sampleTextData
-    let audioRecordingsData = AudioRecordingData.sampleAudioData
-    
-    var mockNotes: [NoteData] = [NoteData]()
-    mockNotes.append(NoteData(notePosition: 0, textData: textsData[4]))
-    mockNotes.append(NoteData(notePosition: 2, textData: textsData[1]))
-    mockNotes.append(NoteData(notePosition: 1, audioRecordingData: audioRecordingsData[4]))
-    
-    let mockNoteData = NoteData(notePosition: 0, textData: TextData())
-    
-    // Only the last not nil value of NoteData init() will be rendered(either textData or audioRecordingData with current implementation)
-    return NoteView(noteData: mockNoteData)
-        .modelContainer(preview.container)
-}*/
+// Preview fails but rendering in app works. Probably related with accessing data through SwiftData (note calls textData / audioRecordingData accordingly).
+//#Preview {
+//    let preview = Preview(NoteData.self)
+//    let notesData = NoteData.sampleMockData
+//    preview.addExamples(notesData)
+//    
+//    // Only the last not nil value of NoteData init() will be rendered(either textData or audioRecordingData with current implementation)
+//    return NoteView(noteData: notesData[0])
+//        .modelContainer(preview.container)
+//}

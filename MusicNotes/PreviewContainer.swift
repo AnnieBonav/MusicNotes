@@ -1,13 +1,7 @@
-//
-//  PreviewContainer.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/22/24.
-//
-
 import Foundation
 import SwiftData
 
+// Simple way of showing a preview.
 struct Preview {
     let container: ModelContainer
     init(_ models: any PersistentModel.Type...) {

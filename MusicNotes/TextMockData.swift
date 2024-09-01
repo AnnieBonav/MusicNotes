@@ -1,12 +1,6 @@
-//
-//  TextMockData.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/22/24.
-//
-
 import Foundation
 
+// Used for testing TextView preview.
 extension TextData {
     static let lastWeek = Calendar.current.date(byAdding: .day, value: -7, to: Date.now)!
     static let lastMonth = Calendar.current.date(byAdding: .month, value: -1, to: Date.now)!

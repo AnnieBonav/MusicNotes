@@ -8,8 +8,9 @@
 import Foundation
 import SwiftData
 
+// TextData is a type of Note that consists only of text and its size.
 @Model
-final class TextData {
+final class TextData: ObservableObject, Identifiable {
     var dateCreated: Date
     var lastModified: Date
     var text: String
@@ -31,9 +32,7 @@ final class TextData {
 }
 
 enum FontSize: String, Codable, CaseIterable {
-    case small
-    case medium
-    case large
+    case small, medium, large, huge
     
     var value: CGFloat {
         switch self {
@@ -43,6 +42,8 @@ enum FontSize: String, Codable, CaseIterable {
             return 16.0
         case .large:
             return 20.0
+        case .huge:
+            return 30.0
         }
     }
 }

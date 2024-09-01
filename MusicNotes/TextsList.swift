@@ -1,10 +1,3 @@
-//
-//  TextsList.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/25/24.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -16,6 +9,7 @@ struct NoteBackground: View {
     }
 }
 
+// Used to debug only TextViews list rendering (helps with spotting errors on list that will translate to the overall Note render).
 struct TextsList: View {
     @Query(sort: \TextData.dateCreated) private var textsData: [TextData]
     

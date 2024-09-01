@@ -1,13 +1,7 @@
-//
-//  AudioPlayerDelegate.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/26/24.
-//
-
 import Foundation
 import AVFAudio
 
+// Used to handle an audioRecording state on its view.
 class AudioPlayerDelegate: NSObject, AVAudioPlayerDelegate, ObservableObject {
     @Published var isPlaying = false
     @Published var currentTime: TimeInterval = 0

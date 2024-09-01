@@ -1,12 +1,6 @@
-//
-//  AudioMockData.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/24/24.
-//
-
 import Foundation
 
+// Used for testing AudioRecordingView preview.
 extension AudioRecordingData {
     static let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date.now)!
     static let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date.now)!

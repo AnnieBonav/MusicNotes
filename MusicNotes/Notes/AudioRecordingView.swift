@@ -1,14 +1,8 @@
-//
-//  AudioRecordingView.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/24/24.
-//
-
 import SwiftUI
 import AVFAudio
 import SwiftData
 
+// Shows the AudioRecordingData, handles playing interactions/
 struct AudioRecordingView: View {
     @Bindable var audioRecordingData: AudioRecordingData
     @State private var audioPlayer: AVAudioPlayer?
@@ -40,7 +34,7 @@ struct AudioRecordingView: View {
             
             Slider(value: $sliderValue, in: 0...100, onEditingChanged: { editing in
                 // Handle pausing while moving slider
-                var wasPlaying = playerDelegate.isPlaying
+                let wasPlaying = playerDelegate.isPlaying
                 if (editing) {
                     if (wasPlaying) {
                         audioPlayer!.pause()
@@ -66,7 +60,7 @@ struct AudioRecordingView: View {
                         .font(.title)
                 }
             }
-        }.onChange(of: playerDelegate.currentTime){ newTimeValue in
+        }.onChange(of: playerDelegate.currentTime){oldTimeValue, newTimeValue in
             handleTimeChange(currentTime: newTimeValue)
         }
         // TODO: Change so when timer ends playerDelegate go backs to beginning (can be inside Delegate)
@@ -81,12 +75,12 @@ struct AudioRecordingView: View {
         sliderValue = currentTime * 100 / audioPlayer!.duration
     }
     
-    // TODO: Decide if other audios should be paused when something played
+    // TODO: Implement pausing other audios when new is played
     func playRecording(verbose: Bool = false){
         guard let audioPlayerInitialized = audioPlayer
         else{
             initializePlaying()
-            // TODO: Check if could be cleaner (not use audioPlayer directly)
+            // TODO: Standardize either using audioPlayer directly or through delegate functions
             audioPlayer?.play()
             playerDelegate.startTimer(audioPlayer: audioPlayer!)
             playerDelegate.isPlaying = true
@@ -145,7 +139,7 @@ struct AudioRecordingView: View {
             print("Error initializing AVAudioPlayer: \(error)")
         }
         
-        if (verbose) { print("Initialized Audio Player. File: \(audioPlayer!.url)") }
+        if (verbose) { print("Initialized Audio Player. File: \(String(describing: audioPlayer!.url))") }
     }
 }
 

@@ -1,13 +1,7 @@
-//
-//  PageView.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/19/24.
-//
-
 import SwiftUI
 import SwiftData
 
+// Rendered single page of the app.
 struct PageView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \NoteData.notePosition) private var notesData: [NoteData]

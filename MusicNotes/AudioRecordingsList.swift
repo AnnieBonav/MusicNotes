@@ -1,13 +1,7 @@
-//
-//  AudioRecordingsList.swift
-//  MusicNotes
-//
-//  Created by Ana Bonavides Aguilar on 8/25/24.
-//
-
 import SwiftUI
 import SwiftData
 
+// Used to debug only AudioRecordingViews list rendering (helps with spotting errors on list that will translate to the overall Note render).
 struct AudioRecordingsList: View {
     @Query(sort: \AudioRecordingData.dateCreated) private var audioRecordingsData: [AudioRecordingData]
     
