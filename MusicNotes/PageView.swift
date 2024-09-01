@@ -27,7 +27,7 @@ struct PageView: View {
                     .ignoresSafeArea()
                 
                 VStack{
-                    NotesList(pageId: pageData.id)
+                    NotesList(pageId: pageData.pageId)
 //                    VStack{
 //                        List{
 //                            Section(content: {
@@ -82,8 +82,7 @@ struct PageView: View {
     private func addTextData() {
         withAnimation {
             let newTextData = TextData()
-            let note = NoteData(notePosition: pageData.notesData.count, textData: newTextData)
-//            let note = NoteData(pageId: pageData.id, notePosition: pageData.notesData.count, textData: newTextData)
+            let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData.count, textData: newTextData)
             
             print("Note to add: \(note)")
             pageData.notesData.append(note)
@@ -140,8 +139,7 @@ struct PageView: View {
         if (verbose) { print("AudioView: Ended recording") }
         
         let newAudioRecordingData = AudioRecordingData(urlString: audioRecordingURL!.lastPathComponent)
-        let note = NoteData(notePosition: pageData.notesData.count, audioRecordingData: newAudioRecordingData)
-//        let note = NoteData(pageId: pageData.id, notePosition: pageData.notesData.count, audioRecordingData: newAudioRecordingData)
+        let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData.count, audioRecordingData: newAudioRecordingData)
         
         pageData.notesData.append(note)
     }
@@ -172,9 +170,9 @@ struct PageView: View {
     let audioRecordingsData = AudioRecordingData.sampleAudioData
     
     var mockNotes: [NoteData] = [NoteData]()
-    mockNotes.append(NoteData(notePosition: 0, textData: textsData[4]))
-    mockNotes.append(NoteData(notePosition: 2, textData: textsData[1]))
-    mockNotes.append(NoteData(notePosition: 1, audioRecordingData: audioRecordingsData[4]))
+    mockNotes.append(NoteData(pageId: pageData.pageId, notePosition: 0, textData: textsData[4]))
+    mockNotes.append(NoteData(pageId: pageData.pageId, notePosition: 2, textData: textsData[1]))
+    mockNotes.append(NoteData(pageId: pageData.pageId, notePosition: 1, audioRecordingData: audioRecordingsData[4]))
     
     preview.addExamples(textsData)
     preview.addExamples(audioRecordingsData)

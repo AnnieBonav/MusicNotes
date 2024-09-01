@@ -1,4 +1,5 @@
 import SwiftData
+import Foundation
 
 enum NoteType: String, CaseIterable, Codable {
     case text
@@ -8,16 +9,20 @@ enum NoteType: String, CaseIterable, Codable {
 // NoteData is used as an abstraction layer for the different types of Notes, since SwiftData is not expected to work with inheritance. This makes rendering the list of notes simple (using NoteView), as well as keeping the index of the note stored for rendering (and leaving the TextData and AudioRecordingData agnostic to their position on the list and which page they belong in).
 @Model
 final class NoteData {
+    var pageId: UUID
     var notePosition: Int
     var noteType: NoteType?
     
     var textData: TextData?
     var audioRecordingData: AudioRecordingData?
     
-    init(notePosition: Int = Int.min,
-         textData: TextData? = nil,
-         audioRecordingData: AudioRecordingData? = nil) {
+    init(
+        pageId: UUID,
+        notePosition: Int = Int.min,
+        textData: TextData? = nil,
+        audioRecordingData: AudioRecordingData? = nil) {
         
+        self.pageId = pageId
         self.noteType = nil
         self.notePosition = notePosition
         

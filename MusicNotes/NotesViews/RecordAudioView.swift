@@ -79,7 +79,7 @@ struct RecordAudioView: View {
         if (verbose) { print("AudioView: Ended recording") }
         
         let newAudioRecordingData = AudioRecordingData(urlString: audioRecordingURL!.lastPathComponent)
-        let note = NoteData(notePosition: pageData.notesData.count, audioRecordingData: newAudioRecordingData)
+        let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData.count, audioRecordingData: newAudioRecordingData)
         context.insert(note)
     }
     
