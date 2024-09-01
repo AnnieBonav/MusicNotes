@@ -15,7 +15,7 @@ struct MusicNotesApp: App {
 
     var body: some Scene {
         WindowGroup {
-            PageView()
+            PagesView()
                 .modelContainer(container)
         }
     }

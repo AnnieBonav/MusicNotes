@@ -9,9 +9,9 @@ final class PageData{
     var lastModified: Date
     var notesData: [NoteData]
     
-    init(title: String,
-         dateCreated: Date,
-         lastModified: Date,
+    init(title: String = "New Page",
+         dateCreated: Date = Date.now,
+         lastModified: Date = Date.now,
          notesData: [NoteData] = [NoteData]()) {
         self.title = title
         self.dateCreated = dateCreated

@@ -6,22 +6,27 @@ struct PageView: View {
     @Query(sort: \NoteData.notePosition) private var notesData: [NoteData]
     @Query(sort: \TextData.dateCreated) private var textsData: [TextData]
     
+    @Bindable var pageData: PageData
+    
     var body: some View {
-        ZStack{
-            LinearGradient(gradient: .init(colors: [Color.pink.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
-            
-            VStack{
-                NotesList()
-                Button(action: addTextData) {
-                    Label("", systemImage: "plus.circle.fill")
-                        .foregroundColor(.accentA)
-                        .font(.system(size: 40))
+        NavigationStack{
+            ZStack{
+                LinearGradient(gradient: .init(colors: [Color.pink.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+                
+                VStack{
+                    NotesList()
+                    Button(action: addTextData) {
+                        Label("", systemImage: "plus.circle.fill")
+                            .foregroundColor(.accentA)
+                            .font(.system(size: 40))
+                    }
+                    RecordAudioView()
+                    Spacer()
                 }
-                RecordAudioView()
-                Spacer()
             }
-        }
+            .navigationTitle(pageData.title)
+        }.tint(.accentA)
     }
     
     private func addTextData() {
@@ -46,6 +51,7 @@ struct PageView: View {
 #Preview {
     let preview = Preview(TextData.self, AudioRecordingData.self, NoteData.self)
     
+    let pageData = PageData(title: "Mock New Page")
     let textsData = TextData.sampleTextData
     let audioRecordingsData = AudioRecordingData.sampleAudioData
     
@@ -58,6 +64,6 @@ struct PageView: View {
     preview.addExamples(audioRecordingsData)
     preview.addExamples(mockNotes)
     
-    return PageView()
+    return PageView(pageData: pageData)
         .modelContainer(preview.container)
 }
