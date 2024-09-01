@@ -14,7 +14,7 @@ struct AudioRecordingsList: View {
                     }
                 }
             }
-        }
+        }.frame(maxHeight: 500)
     }
 }
 

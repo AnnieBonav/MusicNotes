@@ -38,6 +38,16 @@ class AudioPlayerDelegate: NSObject, AVAudioPlayerDelegate, ObservableObject {
         timer = nil
     }
     
+//    func continueTimer(){
+//
+//    }
+    
+    func playAudio(audioPlayer: AVAudioPlayer) {
+        audioPlayer.play()
+        isPlaying = true
+        
+    }
+    
     func pauseAudio(audioPlayer: AVAudioPlayer) {
         audioPlayer.pause()
         isPlaying = false

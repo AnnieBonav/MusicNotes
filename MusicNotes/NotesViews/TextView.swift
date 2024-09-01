@@ -7,11 +7,10 @@ struct TextView: View {
     @Bindable var textData: TextData
         
     var placeHolderText = "Write Something!"
-    
     @State private var containsPlaceHolderText: Bool = false
     
     var body: some View {
-        GroupBox {
+        VStack{
             VStack(alignment: .leading) {
                 TextEditor(text: $textData.text)
                     .font(.system(size: textData.fontSize.value))
@@ -30,21 +29,30 @@ struct TextView: View {
                     }
                 // TODO: Add having placeholder back
                 HStack {
-                    ForEach(FontSize.allCases, id: \.self) { fs in
+                    Button {
+                        textData.fontSize = FontSize.medium
+                        print("Setting to fontSize \(FontSize.medium)")
+                    } label: {
+                        Text("Annie")
+                    }
+                    ForEach(FontSize.allCases, id: \.self) { fontSize in
                         Button {
-                            textData.fontSize = fs
+                            if textData.fontSize != fontSize {
+                                textData.fontSize = fontSize
+                                print("Setting to fontSize \(fontSize)")
+                            }
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 4)
-                                    .foregroundColor(textData.fontSize.value == fs.value ? .accentA : .clear)
+                                    .foregroundColor(textData.fontSize.value == fontSize.value ? .accentA : .clear)
                                     .frame(width: 20, height: 24)
                                 Text("A")
-                                    .foregroundColor(textData.fontSize.value == fs.value ? .appBackground : .accentA)
-                                    .font(.system(size: fs.value, weight: .medium, design: .rounded))
+                                    .foregroundColor(textData.fontSize.value == fontSize.value ? .appBackground : .accentA)
+                                    .font(.system(size: fontSize.value, weight: .medium, design: .rounded))
                                     .frame(width: 20, height: 24, alignment: .center)
                             }
                         }
-                    }
+                    }.background(.pink)
                 }
                 .frame(maxWidth: .infinity,  alignment: .center)
                 .onAppear{

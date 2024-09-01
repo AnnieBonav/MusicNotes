@@ -1,7 +1,6 @@
 import SwiftUI
 import SwiftData
 
-// Rendered single page of the app.
 struct PageView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \NoteData.notePosition) private var notesData: [NoteData]
@@ -25,7 +24,6 @@ struct PageView: View {
         }
     }
     
-    // TODO: Check if handling CRUD here is best
     private func addTextData() {
         withAnimation {
             let newTextData = TextData()
