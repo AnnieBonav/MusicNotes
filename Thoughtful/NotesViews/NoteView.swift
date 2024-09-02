@@ -25,5 +25,5 @@ struct NoteView: View {
     let audioRecordingData = AudioRecordingData(urlString: "")
     let mockNote = NoteData(pageId: UUID(), noteType: NoteType.text, textData: textData, audioRecordingData: audioRecordingData)
                             
-    return NoteView(noteData: mockNote, textData: mockNote.textData, audioRecordingData: mockNote.audioRecordingData)
+    return NoteView(noteData: mockNote, textData: mockNote.textData!, audioRecordingData: mockNote.audioRecordingData!)
 }

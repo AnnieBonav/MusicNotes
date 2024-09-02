@@ -4,10 +4,15 @@ import AVFAudio
 
 struct PageView: View {
     @Environment(\.modelContext) private var context
-    @Bindable var pageData: PageData
     
-    let columnLayout = Array(repeating: GridItem(), count: 1)
-
+    let pageData: PageData
+    let columnLayout: Array = Array(repeating: GridItem(), count: 1)
+    @State var pageTitle: String = ""
+    
+    init(pageData: PageData){
+        self.pageData = pageData
+    }
+    
     var body: some View {
         NavigationStack{
             ZStack{
@@ -32,37 +37,40 @@ struct PageView: View {
                     .ignoresSafeArea()
                 }
             }
-            .navigationTitle($pageData.title)
+            .navigationTitle($pageTitle) // $ States it can be edited
             .navigationBarTitleDisplayMode(.inline)
             .tint(Color.accentColor)
-        }.tint(Color.accentColor)
+        }
+        .onAppear(){
+            pageTitle = pageData.title
+        }
+        .onDisappear(){
+            pageData.title = pageTitle
+        }
+        .tint(Color.accentColor)
     }
     
     private func addTextData() {
         withAnimation {
             let newTextData = TextData()
-            let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData.count, noteType: NoteType.text, textData: newTextData)
+            let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData!.count, noteType: NoteType.text, textData: newTextData)
             
-            pageData.notesData.append(note)
+            context.insert(note)
         }
     }
 }
 
 #Preview {
-    let preview = Preview(TextData.self, AudioRecordingData.self, NoteData.self)
+    let preview = Preview(PageData.self)
     
     let pageData = PageData(title: "Mock New Page")
-    let textsData = TextData.sampleTextData
-    let audioRecordingsData = AudioRecordingData.sampleAudioData
-    
-    var mockNotes: [NoteData] = [NoteData]()
-    mockNotes.append(NoteData(pageId: pageData.pageId, notePosition: 0, noteType: NoteType.text, textData: textsData[4]))
-    mockNotes.append(NoteData(pageId: pageData.pageId, notePosition: 2, noteType: NoteType.text, textData: textsData[1]))
-    mockNotes.append(NoteData(pageId: pageData.pageId, notePosition: 1, noteType: NoteType.audioRecording, audioRecordingData: audioRecordingsData[4]))
-    
-    preview.addExamples(textsData)
-    preview.addExamples(audioRecordingsData)
-    preview.addExamples(mockNotes)
+    var mockNotes: [NoteData] = [
+        NoteData(pageId: pageData.pageId, notePosition: 0, noteType: NoteType.text, textData: TextData(userText: "Hello! I am a Text")),
+        NoteData(pageId: pageData.pageId, notePosition: 2, noteType: NoteType.text, textData: TextData(userText: "I am another text :))")),
+        NoteData(pageId: pageData.pageId, notePosition: 1, noteType: NoteType.audioRecording, audioRecordingData: AudioRecordingData(title: "Title", details: "We are details!", urlString: ""))
+    ]
+    pageData.notesData = mockNotes
+    preview.addExamples([pageData])
     
     return PageView(pageData: pageData)
         .modelContainer(preview.container)

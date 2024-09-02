@@ -4,9 +4,16 @@ import SwiftData
 // Is the overall render of all NotesTypes. Serves as body of a single app Page.
 struct NotesList: View {
     @Environment(\.modelContext) var context
-    @Query(sort: \NoteData.notePosition) var notesData: [NoteData]
-    @State var pageId: UUID
+    @Query private var notesData: [NoteData]
     
+    init(pageId: UUID) {
+        let sortDescriptors: [SortDescriptor<NoteData>] = [SortDescriptor(\NoteData.notePosition)]
+        
+        let predicate = #Predicate<NoteData> { noteData in
+            noteData.pageId == pageId
+        }
+        _notesData = Query(filter: predicate, sort: sortDescriptors)
+    }
     let columnLayout = Array(repeating: GridItem(), count: 1)
     
     var body: some View {
@@ -14,9 +21,7 @@ struct NotesList: View {
             List{
                 Section(content: {
                     ForEach(notesData, id: \.self) { noteData in
-                        if(noteData.pageId == pageId){
-                            NoteView(noteData: noteData, textData: noteData.textData, audioRecordingData: noteData.audioRecordingData)
-                        }
+                        NoteView(noteData: noteData, textData: noteData.textData!, audioRecordingData: noteData.audioRecordingData!)
                     }
                     .onDelete { indexSet in
                         withAnimation {
@@ -41,6 +46,7 @@ struct NotesList: View {
     let preview = Preview(PageData.self)
     let mockPageData = PageData.mockPageData[0]
     let pageId = mockPageData.pageId
+    
     let mockNotes =
         [
             NoteData(pageId: pageId, notePosition: 0, noteType: NoteType.text, textData: TextData()),

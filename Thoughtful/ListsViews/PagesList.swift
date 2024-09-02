@@ -18,7 +18,7 @@ struct PagesList: View {
     var body: some View {
         List{
             Section(content: {
-                ForEach(pages){page in
+                ForEach(pages) { page in
                     NavigationLink {
                         PageView(pageData: page)
                     } label:{

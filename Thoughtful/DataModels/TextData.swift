@@ -11,7 +11,6 @@ import SwiftData
 // TextData is a type of Note that consists only of text and its size.
 @Model
 final class TextData {
-    var noteData: NoteData? // For inverse relationship to NoteData
     
     var dateCreated: Date
     var lastModified: Date
@@ -31,6 +30,8 @@ final class TextData {
         self.userText = userText
         self.fontSize = fontSize
     }
+    
+    var noteData: NoteData? // For inverse relationship to NoteData
 }
 
 enum FontSize: String, Codable, CaseIterable {

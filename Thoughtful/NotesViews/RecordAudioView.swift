@@ -79,9 +79,10 @@ struct RecordAudioView: View {
         if (verbose) { print("AudioView: Ended recording") }
         
         let newAudioRecordingData = AudioRecordingData(urlString: audioRecordingURL!.lastPathComponent)
-        let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData.count, noteType: NoteType.audioRecording, audioRecordingData: newAudioRecordingData)
         
-        pageData.notesData.append(note)
+        let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData!.count, noteType: NoteType.audioRecording, audioRecordingData: newAudioRecordingData)
+        
+        context.insert(note)
     }
     
     func getNewFileName(verbose: Bool = false) -> URL {
