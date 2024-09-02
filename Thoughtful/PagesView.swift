@@ -45,6 +45,7 @@ struct PagesView: View {
                         .font(.title2)
                         .tint(Color.accentColor)
                         .padding(.bottom)
+                        Spacer()
                     }
                 }
             }
@@ -60,10 +61,10 @@ struct PagesView: View {
 }
 
 #Preview {
-    var preview = Preview(PageData.self)
-//    let pages = PageData.mockPageData
-//    
-//    preview.addExamples(pages)
+    let preview = Preview(PageData.self)
+    let pages = PageData.mockPageData
+
+    preview.addExamples(pages)
     return PagesView()
         .modelContainer(preview.container)
 }

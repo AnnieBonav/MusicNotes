@@ -56,7 +56,7 @@ struct PagesList: View {
 }
 
 #Preview {
-    var preview = Preview(PageData.self)
+    let preview = Preview(PageData.self)
     let pages = PageData.mockPageData
     
     preview.addExamples(pages)

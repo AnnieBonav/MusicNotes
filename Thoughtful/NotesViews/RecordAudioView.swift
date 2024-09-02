@@ -23,7 +23,7 @@ struct RecordAudioView: View {
         HStack{
             Button(action: { record() }) {
                 Label("", systemImage: isRecording ? "stop.fill" : "record.circle.fill")
-                     .foregroundColor(Color.accentColor)
+                    .foregroundColor(.appBackground)
                      .font(.largeTitle)
             }
         }.onAppear(){
@@ -103,8 +103,10 @@ struct RecordAudioView: View {
 }
 
 #Preview {
-    var preview = Preview(PageData.self)
-    var mockPageData = PageData()
+    let preview = Preview(PageData.self)
+    let mockPageData = PageData()
+    preview.addExamples([mockPageData])
     
     return RecordAudioView(pageData: mockPageData)
+        .modelContainer(preview.container)
 }

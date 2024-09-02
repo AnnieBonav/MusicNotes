@@ -36,10 +36,10 @@ struct NotesList: View {
 }
 
 #Preview {
-    var preview = Preview(PageData.self)
-    var mockPageData = PageData.mockPageData[0]
+    let preview = Preview(PageData.self)
+    let mockPageData = PageData.mockPageData[0]
     let pageId = mockPageData.pageId
-    var mockNotes =
+    let mockNotes =
         [
             NoteData(pageId: pageId, notePosition: 0, noteType: NoteType.text, textData: TextData()),
             NoteData(pageId: pageId, notePosition: 2, noteType: NoteType.audioRecording, audioRecordingData: AudioRecordingData(urlString: "")),
@@ -52,5 +52,4 @@ struct NotesList: View {
     
     return NotesList(pageId: mockPageData.pageId)
         .modelContainer(preview.container)
-//    return NotesList(notesData: [NoteData(notePosition: 0, textData: TextData()), NoteData(notePosition: 1, audioRecordingData: AudioRecordingData(urlString: ""))])
 }

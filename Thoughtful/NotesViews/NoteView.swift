@@ -20,10 +20,10 @@ struct NoteView: View {
 
     // TODO: Fix Persistent Identifier
 #Preview {
-    // Only the first not nil value of NoteData init() will be rendered(either textData or audioRecordingData with current implementation). However, all possible data types need to be sent, as preview does not work otherwise (rendering in app does work, but it makes debugging hard).
-    var textData = TextData()
-    var audioRecordingData = AudioRecordingData(urlString: "")
-    var mockNote = NoteData(pageId: UUID(), noteType: NoteType.text, textData: textData, audioRecordingData: audioRecordingData)
+    // MAKE SURE to set the noteType of the note that is being set: NoteType.text for textData and NoteType.audio for audioRecordingData
+    let textData = TextData()
+    let audioRecordingData = AudioRecordingData(urlString: "")
+    let mockNote = NoteData(pageId: UUID(), noteType: NoteType.text, textData: textData, audioRecordingData: audioRecordingData)
                             
     return NoteView(noteData: mockNote, textData: mockNote.textData, audioRecordingData: mockNote.audioRecordingData)
 }
