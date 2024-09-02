@@ -8,14 +8,14 @@ final class AudioRecordingData {
     var noteData: NoteData? // For inverse relationship to NoteData
     
     var dateCreated: Date
-    var title: String?
-    var details: String?
+    var title: String
+    var details: String
     var urlString: String
     
     init(
         dateCreated: Date = Date.now,
-        title: String? = nil,
-        details: String? = nil,
+        title: String = "",
+        details: String = "",
         urlString: String
     ) {
         self.dateCreated = dateCreated

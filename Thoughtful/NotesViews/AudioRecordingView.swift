@@ -12,62 +12,110 @@ struct AudioRecordingView: View {
     let currentDocumentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     
     @State var sliderValue : Double = 0
+    @State var isEditing: Bool = false
+    
+    // Needs to change view to work
+    @State private var settingsDetent = PresentationDetent.medium
+    
+    @State var saveTitle: String = ""
+    @State var saveDetails: String = ""
     
     var body: some View {
-        VStack(alignment: .leading){
+        NavigationStack() {
             Label {
                 Text(audioRecordingData.dateCreated.formatted(date: .abbreviated, time: .shortened))
             } icon: {
                 Image(systemName: "music.quarternote.3")
-            }
+            }.frame(maxWidth: .infinity, alignment: .leading)
             
-            if let title = audioRecordingData.title {
-                Text(title)
+            
+            if (audioRecordingData.title != "") {
+                Text(audioRecordingData.title)
                     .font(.title3)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 1)
             }
             
-            if let details = audioRecordingData.details {
-                Text(details)
+            if (audioRecordingData.details != "") {
+                Text(audioRecordingData.details)
                     .font(.caption)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            Slider(value: $sliderValue, in: 0...100, onEditingChanged: { editing in
-                // Handle pausing while moving slider
-                let wasPlaying = playerDelegate.isPlaying
-                if (editing) {
-                    if (wasPlaying) {
-                        audioPlayer!.pause()
-                    }
-                }else{
-                    handleSliderChange()
-                    if (wasPlaying){
-                        audioPlayer!.play()
-                    }
-                }
-            })
-                .tint(Color.accentColor).padding(.top)
+            ZStack{
+                VStack(alignment: .leading) {
+                    Slider(value: $sliderValue, in: 0...100, onEditingChanged: { editing in
+                        // Handle pausing while moving slider
+                        let wasPlaying = playerDelegate.isPlaying
+                        if (editing) {
+                            if (wasPlaying) {
+                                audioPlayer!.pause()
+                            }
+                        }else{
+                            handleSliderChange()
+                            if (wasPlaying){
+                                audioPlayer!.play()
+                            }
+                        }
+                    }).tint(Color.accentColor).padding(.top)
                 
-            HStack{
-                Button(action: rewindRecording) {
-                    Label("", systemImage: "backward.end.circle.fill")
-                        .foregroundColor(Color.accentColor)
-                        .font(.title)
-                }
-                Button(action: { playRecording() }) {
-                    Label("", systemImage: playerDelegate.isPlaying ? "pause.fill" : "play.fill")
-                        .foregroundColor(Color.accentColor)
-                        .font(.title)
+                    HStack{
+                        Button("",systemImage: "backward.end.circle.fill", action: rewindRecording)
+                                .foregroundColor(Color.accentColor)
+                                .font(.title)
+                                .buttonStyle(BorderlessButtonStyle()) // Added to prevent all HStack buttons being called
+                        
+                        Button("", systemImage: playerDelegate.isPlaying ? "pause.fill" : "play.fill", action: {
+                            playRecording(verbose: true)})
+                                .foregroundColor(Color.accentColor)
+                                .font(.title)
+                                .buttonStyle(BorderlessButtonStyle())
+                        Spacer()
+                    }
                 }
             }
+            .background(.clear)
+            .onChange(of: playerDelegate.currentTime){oldTimeValue, newTimeValue in
+                handleTimeChange(currentTime: newTimeValue)
+            }
         }
-        .background(.clear)
-        .onChange(of: playerDelegate.currentTime){oldTimeValue, newTimeValue in
-            handleTimeChange(currentTime: newTimeValue)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            saveTitle = audioRecordingData.title
+            saveDetails = audioRecordingData.details
+            
+            audioRecordingData.title = "..."
+            audioRecordingData.details = "..."
+            isEditing = true
         }
+        .sheet(isPresented: $isEditing, onDismiss: {
+            dismissSheet()
+        }, content: {
+            NavigationStack{
+                EditAudioRecordingView(audioRecordingData: audioRecordingData, saveTitle: $saveTitle, saveDetails: $saveDetails)
+            }
+            .presentationDetents([.medium, .large], selection: $settingsDetent)
+            .presentationBackgroundInteraction(.automatic)
+            .padding()
+        })
+            
         // TODO: Change so when timer ends playerDelegate go backs to beginning (can be inside Delegate)
+    }
+    
+    // Dismiss is called before OnDissapear from sheet
+    private func dismissSheet(){        
+        // Variables get saved from editing in sheet
+        audioRecordingData.title = saveTitle
+        audioRecordingData.details = saveDetails
+        
+        if (audioRecordingData.title == "Title"){
+            audioRecordingData.title = ""
+        }
+        if (audioRecordingData.details == "Details") {
+            audioRecordingData.details = ""
+        }
+        
+        isEditing = false
     }
     
     func handleSliderChange() {

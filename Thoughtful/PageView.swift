@@ -7,19 +7,7 @@ struct PageView: View {
     @Bindable var pageData: PageData
     
     let columnLayout = Array(repeating: GridItem(), count: 1)
-    
-    // -- AUDIO
-    @State private var audioRecorder: AVAudioRecorder?
-    @State private var recordingSettings: [String: Any] = [
-        AVFormatIDKey: kAudioFormatMPEG4AAC,
-        AVSampleRateKey: 12000,
-        AVNumberOfChannelsKey: 1,
-        AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-    ]
-    
-    @State private var audioRecordingURL: URL?
-    @State private var isRecording: Bool = false
-    
+
     var body: some View {
         NavigationStack{
             ZStack{

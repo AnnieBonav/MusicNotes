@@ -23,17 +23,17 @@ struct TextView: View {
                     )
                 // TODO: Add deleting if null at closure?
                     .onTapGesture {
-                        if containsPlaceHolderText {
+                        if (containsPlaceHolderText) {
                             textData.userText = ""
                             containsPlaceHolderText = false
                         }
                     }
                 // TODO: Add having placeholder back
-                if(isEditing){
+                if (isEditing) {
                     HStack {
                         ForEach(FontSize.allCases, id: \.self) { fontSize in
                             Button {
-                                if textData.fontSize != fontSize {
+                                if (textData.fontSize != fontSize) {
                                     textData.fontSize = fontSize
                                     print("Setting to fontSize \(fontSize)")
                                 }

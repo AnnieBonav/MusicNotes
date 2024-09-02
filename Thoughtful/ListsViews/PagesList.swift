@@ -31,7 +31,9 @@ struct PagesList: View {
                                 .font(.subheadline)
                                 .padding(.bottom, 4)
                         }
-                    }.tint(.primary)
+                    }
+                    .isDetailLink(false)
+                    .tint(.primary)
                 }
                 // TODO: Add confirm delete
                 .onDelete { indexSet in

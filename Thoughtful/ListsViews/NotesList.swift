@@ -13,14 +13,16 @@ struct NotesList: View {
         VStack{
             List{
                 Section(content: {
-                    ForEach(notesData){noteData in
+                    ForEach(notesData, id: \.self) { noteData in
                         if(noteData.pageId == pageId){
                             NoteView(noteData: noteData, textData: noteData.textData, audioRecordingData: noteData.audioRecordingData)
                         }
                     }
                     .onDelete { indexSet in
-                        for index in indexSet {
-                            context.delete(notesData[index])
+                        withAnimation {
+                            for index in indexSet {
+                                context.delete(notesData[index])
+                            }
                         }
                     }
                     .listRowSeparator(.hidden)
