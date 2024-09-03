@@ -20,7 +20,7 @@ struct PagesList: View {
             Section(content: {
                 ForEach(pages) { page in
                     NavigationLink {
-                        PageView(pageData: page)
+                        PageView(pageData: page, pageId: page.pageId) // Sending pageId from here avoid error of .padeId comparison
                     } label:{
                         VStack(alignment: .leading){
                             Text(page.title)

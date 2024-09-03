@@ -4,13 +4,22 @@ import AVFAudio
 
 struct PageView: View {
     @Environment(\.modelContext) private var context
+    @Query var notesData: [NoteData]
     
     let pageData: PageData
+    
     let columnLayout: Array = Array(repeating: GridItem(), count: 1)
     @State var pageTitle: String = ""
     
-    init(pageData: PageData){
+    init(pageData: PageData, pageId: UUID){
         self.pageData = pageData
+        
+        let sortDescriptors: [SortDescriptor<NoteData>] = [SortDescriptor(\NoteData.notePosition)]
+        
+        let predicate = #Predicate<NoteData> { noteData in
+            noteData.pageId == pageId
+        }
+        _notesData = Query(filter: predicate, sort: sortDescriptors)
     }
     
     var body: some View {
@@ -20,7 +29,7 @@ struct PageView: View {
                     .ignoresSafeArea()
                 
                 VStack{
-                    NotesList(pageId: pageData.pageId)
+                    NotesList(notesData: notesData)
                     HStack{
                         Spacer()
                         Button(action: addTextData) {
@@ -72,6 +81,6 @@ struct PageView: View {
     pageData.notesData = mockNotes
     preview.addExamples([pageData])
     
-    return PageView(pageData: pageData)
+    return PageView(pageData: pageData, pageId: pageData.pageId)
         .modelContainer(preview.container)
 }

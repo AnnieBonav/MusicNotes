@@ -4,15 +4,10 @@ import SwiftData
 // Is the overall render of all NotesTypes. Serves as body of a single app Page.
 struct NotesList: View {
     @Environment(\.modelContext) var context
-    @Query private var notesData: [NoteData]
+    let notesData: [NoteData]
     
-    init(pageId: UUID) {
-        let sortDescriptors: [SortDescriptor<NoteData>] = [SortDescriptor(\NoteData.notePosition)]
-        
-        let predicate = #Predicate<NoteData> { noteData in
-            noteData.pageId == pageId
-        }
-        _notesData = Query(filter: predicate, sort: sortDescriptors)
+    init(notesData: [NoteData]) {
+        self.notesData = notesData
     }
     let columnLayout = Array(repeating: GridItem(), count: 1)
     
