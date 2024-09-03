@@ -1,6 +1,7 @@
 import SwiftUI
 import AVFAudio
 import SwiftData
+import Foundation
 
 // View currently shown on PageView to record new Audio
 struct RecordAudioView: View {
@@ -19,16 +20,49 @@ struct RecordAudioView: View {
     
     @State var pageData: PageData
     
+    @State var seconds = 0
+    @State var minutes = 0
+    @State var timeString = "00:00"
+    @State var timerRecord: Timer?
+    
+    @Binding var showRecordingSheet: Bool
+    
     var body: some View {
-        HStack{
-            Button(action: { record() }) {
-                Label("", systemImage: isRecording ? "stop.fill" : "record.circle.fill")
-                    .foregroundColor(.appBackground)
-                     .font(.largeTitle)
+        VStack {
+            Label {
+                Text("New Audio Recording")
+                    .padding(.top)
+            } icon: {
+                Image(systemName: "waveform")
+                    .symbolEffect(
+                        .variableColor.iterative, isActive: isRecording)
+            }
+            .padding([.top], 20)
+            .padding([.bottom], 2)
+            
+            Text(timeString)
+                .font(.title)
+            Spacer()
+            
+            HStack{
+                Button(action: { record() }) {
+                    Label("", systemImage: isRecording ? "stop.fill" : "record.circle.fill")
+                        .foregroundColor(.accentColor)
+                         .font(.largeTitle)
+                         .padding(.bottom)
+                         .padding(.top, 2)
+                }
             }
         }.onAppear(){
             setupAudioSession()
+            record()
         }
+        .onDisappear(){
+            cancelRecording()
+//            endRecording()
+        }
+        .frame(maxWidth: .infinity)
+        .background(.lightAccent)
     }
     
     private func setupAudioSession() {
@@ -37,6 +71,7 @@ struct RecordAudioView: View {
             try audioSession.setCategory(.playAndRecord, mode: .default)
             try audioSession.setActive(true)
             try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
+            _ = recorderPrepared()
         } catch {
             print("OOPS, something failed creating the audio Session")
         }
@@ -52,8 +87,25 @@ struct RecordAudioView: View {
     
     private func startRecording(verbose: Bool = false){
         if (recorderPrepared()){
-            audioRecorder?.record()
+            guard let validatedAuidoRecorder = audioRecorder
+            else{
+                return
+            }
+            validatedAuidoRecorder.prepareToRecord()
+            validatedAuidoRecorder.record()
+            
             isRecording = true
+            timerRecord = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
+                seconds += 1
+                
+                if (seconds == 60) {
+                    seconds = 0
+                    minutes += 1
+                }
+                
+                let timeString = String(format: "%02d:%02d", minutes, seconds)
+                self.timeString = timeString
+            })
             if (verbose) { print("AudioView: Started recording")
             }
         }
@@ -63,8 +115,6 @@ struct RecordAudioView: View {
         do {
             audioRecordingURL = getNewFileName(verbose: true)
             audioRecorder = try AVAudioRecorder(url: audioRecordingURL!, settings: recordingSettings)
-            audioRecorder?.prepareToRecord()
-            
             return true
         } catch {
             // TODO: Check best practices on error handling
@@ -73,9 +123,31 @@ struct RecordAudioView: View {
         }
     }
     
-    func endRecording(verbose: Bool = false){
-        audioRecorder?.stop()
+    func cancelRecording(){
+        guard let validatedAudioRecorder = audioRecorder
+        else{
+            return
+        }
+        validatedAudioRecorder.stop()
+        
         isRecording = false
+        timerRecord?.invalidate()
+        seconds = 0
+        minutes = 0
+    }
+    
+    func endRecording(verbose: Bool = false){
+        guard let validatedAudioRecorder = audioRecorder
+        else{
+            return
+        }
+        validatedAudioRecorder.stop()
+        
+        isRecording = false
+        timerRecord?.invalidate()
+        seconds = 0
+        minutes = 0
+        
         if (verbose) { print("AudioView: Ended recording") }
         
         let newAudioRecordingData = AudioRecordingData(urlString: audioRecordingURL!.lastPathComponent)
@@ -83,6 +155,7 @@ struct RecordAudioView: View {
         let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData!.count, noteType: NoteType.audioRecording, audioRecordingData: newAudioRecordingData)
         
         context.insert(note)
+        showRecordingSheet = false
     }
     
     func getNewFileName(verbose: Bool = false) -> URL {
@@ -108,6 +181,7 @@ struct RecordAudioView: View {
     let mockPageData = PageData()
     preview.addExamples([mockPageData])
     
-    return RecordAudioView(pageData: mockPageData)
+    @State var isShowing: Bool = false
+    return RecordAudioView(pageData: mockPageData, showRecordingSheet: $isShowing)
         .modelContainer(preview.container)
 }

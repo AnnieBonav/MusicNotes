@@ -1,14 +1,6 @@
 import SwiftUI
 import SwiftData
 
-struct NoteBackground: View {
-    var body: some View {
-        RoundedRectangle(cornerRadius: 8)
-            .foregroundColor(.appBackground)
-            .background(.ultraThickMaterial)
-    }
-}
-
 // Used to debug only TextViews list rendering (helps with spotting errors on list that will translate to the overall Note render).
 struct TextsList: View {
     @Query(sort: \TextData.dateCreated) private var textsData: [TextData]

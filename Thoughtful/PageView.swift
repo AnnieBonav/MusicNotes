@@ -22,33 +22,90 @@ struct PageView: View {
         _notesData = Query(filter: predicate, sort: sortDescriptors)
     }
     
+    @State private var settingsDetent = PresentationDetent.fraction(0.25)
+    @State private var showRecordingSheet = false
     var body: some View {
         NavigationStack{
             ZStack{
-                LinearGradient(gradient: .init(colors: [Color.accentColor.opacity(0.2), Color.accentColor.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
+                LinearGradient(gradient: .init(colors: [Color.accentColor.opacity(0.08), Color.accentColor.opacity(0.07)]), startPoint: .top, endPoint: .bottom)
                     .ignoresSafeArea()
                 
                 VStack{
-                    NotesList(notesData: notesData)
-                    HStack{
-                        Spacer()
-                        Button(action: addTextData) {
-                            Label("", systemImage: "plus.circle.fill")
-                                .foregroundColor(.appBackground)
-                                .font(.largeTitle)
+                    if(!notesData.isEmpty){
+                        NotesList(notesData: notesData, addTextDataFunc: addTextData, addAudioRecordingDataFunc: toggleShowRecordingSheet)
+                        
+                        // OTHER BUTTONS OPTION
+//                        HStack{
+//                            Spacer()
+//                            Button(action: {
+//                                addTextData()
+//                            }) {
+//                                Image(systemName: "plus.circle.fill")
+//                                    .foregroundColor(.appBackground)
+//                                    .font(.largeTitle)
+//                            }
+//                            Button(action: {
+//                                showRecordingSheet = true
+//                            }) {
+//                                Image(systemName: "record.circle.fill")
+//                                    .foregroundColor(.appBackground)
+//                                    .font(.largeTitle)
+//                            }
+//                            Spacer()
+//                        }
+//                        .padding(.top)
+//                        .background(Color.accentColor)
+//                        .frame(maxWidth: .infinity)
+//                        .ignoresSafeArea()
+                    } else {
+                        ContentUnavailableView{
+                            Label("You have no notes yet", systemImage: "note.text")
+                        } description: {
+                            Text("Add a text or audio!").font(.title)
+                        } actions: {
+                            HStack {
+                                Button (action: {
+                                    addTextData()
+                                }) { Image(systemName: "square.and.pencil.circle")
+                                        .font(.largeTitle)
+                                }
+                                .buttonStyle(.bordered)
+                                .buttonBorderShape(.circle)
+                                .controlSize(.large)
+                                .font(.title2)
+                                .tint(.accentColor.opacity(0.6))
+                                .foregroundColor(.accentColor)
+                                
+                                Button (action: {
+                                    toggleShowRecordingSheet()
+                                }) { Image(systemName: "waveform.circle")
+                                        .font(.largeTitle)
+                                }
+                                .buttonStyle(.bordered)
+                                .buttonBorderShape(.circle)
+                                .controlSize(.large)
+                                .font(.title2)
+                                .tint(.accentColor.opacity(0.6))
+                                .foregroundColor(.accentColor)
+                            }
+                            .padding(.bottom, 40)
                         }
-                        RecordAudioView(pageData: pageData)
-                        Spacer()
                     }
-                    .padding(.top)
-                    .background(Color.accentColor)
-                    .frame(maxWidth: .infinity)
-                    .ignoresSafeArea()
+                    
                 }
+                .sheet(isPresented: $showRecordingSheet, onDismiss: {
+                    dismissAudioSheet()
+                }, content: {
+                    NavigationStack {
+                        RecordAudioView(pageData: pageData, showRecordingSheet: $showRecordingSheet)
+                    }
+                    .presentationDetents([.fraction(0.25)], selection: $settingsDetent)
+                    .presentationBackgroundInteraction(.automatic)
+                    .presentationDragIndicator(.visible)
+                })
             }
             .navigationTitle($pageTitle) // $ States it can be edited
             .navigationBarTitleDisplayMode(.inline)
-            .tint(Color.accentColor)
         }
         .onAppear(){
             pageTitle = pageData.title
@@ -56,15 +113,29 @@ struct PageView: View {
         .onDisappear(){
             pageData.title = pageTitle
         }
-        .tint(Color.accentColor)
+        .onTapGesture {
+            print("Tapped")
+        }
     }
     
-    private func addTextData() {
+    private func dismissAudioSheet(){
+        print("Dismissed")
+    }
+    
+    func addTextData() {
         withAnimation {
             let newTextData = TextData()
             let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData!.count, noteType: NoteType.text, textData: newTextData)
             
             context.insert(note)
+        }
+    }
+    
+    func toggleShowRecordingSheet(){
+        if (showRecordingSheet) {
+            showRecordingSheet = false
+        }else{
+            showRecordingSheet = true
         }
     }
 }
@@ -74,9 +145,9 @@ struct PageView: View {
     
     let pageData = PageData(title: "Mock New Page")
     var mockNotes: [NoteData] = [
-        NoteData(pageId: pageData.pageId, notePosition: 0, noteType: NoteType.text, textData: TextData(userText: "Hello! I am a Text")),
-        NoteData(pageId: pageData.pageId, notePosition: 2, noteType: NoteType.text, textData: TextData(userText: "I am another text :))")),
-        NoteData(pageId: pageData.pageId, notePosition: 1, noteType: NoteType.audioRecording, audioRecordingData: AudioRecordingData(title: "Title", details: "We are details!", urlString: ""))
+//        NoteData(pageId: pageData.pageId, notePosition: 0, noteType: NoteType.text, textData: TextData(userText: "Hello! I am a Text")),
+//        NoteData(pageId: pageData.pageId, notePosition: 2, noteType: NoteType.text, textData: TextData(userText: "I am another text :))")),
+//        NoteData(pageId: pageData.pageId, notePosition: 1, noteType: NoteType.audioRecording, audioRecordingData: AudioRecordingData(title: "Title", details: "We are details!", urlString: ""))
     ]
     pageData.notesData = mockNotes
     preview.addExamples([pageData])

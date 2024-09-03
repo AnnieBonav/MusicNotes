@@ -4,7 +4,7 @@ import SwiftData
 struct PageBackground: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 0)
-            .foregroundColor(Color.accentColor.opacity(0.1))
+            .foregroundColor(.lightAccent.opacity(0.8))
             .background(.ultraThinMaterial)
     }
 }

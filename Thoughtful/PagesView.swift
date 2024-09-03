@@ -7,30 +7,31 @@ struct PagesView: View {
     
     @State var noPages: Bool = true
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             Group {
-                if !pages.isEmpty  {
+                if (!pages.isEmpty) {
                     VStack{
                         PagesList()
-                        HStack{
-                            Spacer()
-                            Button{
-                                addPage()
-                            } label: {
-                                Label("", systemImage: "plus.circle.fill")
-                                    .foregroundColor(.appBackground)
-                                    .font(.largeTitle)
-                            }
-                            Spacer()
-                        }
-                        .padding(.top)
-                        .background(Color.accentColor)
-                        .frame(maxWidth: .infinity)
-                        .ignoresSafeArea()
+                        // Other add option
+//                        HStack{
+//                            Spacer()
+//                            Button{
+//                                addPage()
+//                            } label: {
+//                                Label("", systemImage: "plus.circle.fill")
+//                                    .foregroundColor(.appBackground)
+//                                    .font(.largeTitle)
+//                            }
+//                            Spacer()
+//                        }
+//                        .padding(.top)
+//                        .background(Color.accentColor)
+//                        .frame(maxWidth: .infinity)
+//                        .ignoresSafeArea()
                     }.frame(maxWidth: .infinity)
-                }else{
+                } else {
                     ContentUnavailableView{
-                        Label("You have nowhere to write yet", systemImage: "note.text")
+                        Label("You have nowhere to write yet", systemImage: "note")
                     } description: {
                         Text("Start with a new Page!").font(.title)
                     } actions: {
@@ -49,8 +50,23 @@ struct PagesView: View {
                     }
                 }
             }
+            .toolbar {
+                ToolbarItem {
+                    Button(action: {
+                        addPage()
+                    }) {
+                        Label("Add Page", systemImage: "plus.circle.fill")
+                    }
+                    .font(.largeTitle)
+                    .controlSize(.large)
+                }
+            }
             .navigationTitle("All Pages")
-            .background(.appBackground)
+            .navigationBarTitleDisplayMode(.inline)
+            .background(
+                LinearGradient(gradient: .init(colors: [Color.accentColor.opacity(0.06), Color.accentColor.opacity(0.02)]), startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+            )
         }
     }
     
