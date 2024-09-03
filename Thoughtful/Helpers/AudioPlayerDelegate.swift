@@ -4,11 +4,13 @@ import AVFAudio
 // Used to handle an audioRecording state on its view.
 class AudioPlayerDelegate: NSObject, AVAudioPlayerDelegate, ObservableObject {
     @Published var isPlaying = false
+    @Published var finishedPlaying = false
     @Published var currentTime: TimeInterval = 0
     private var timer: Timer?
 
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         isPlaying = false
+        finishedPlaying = true
         stopTimer()
     }
     

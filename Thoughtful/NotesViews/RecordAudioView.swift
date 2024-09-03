@@ -54,7 +54,6 @@ struct RecordAudioView: View {
                 }
             }
         }.onAppear(){
-            setupAudioSession()
             record()
         }
         .onDisappear(){
@@ -63,18 +62,6 @@ struct RecordAudioView: View {
         }
         .frame(maxWidth: .infinity)
         .background(.lightAccent)
-    }
-    
-    private func setupAudioSession() {
-        do {
-            let audioSession = AVAudioSession.sharedInstance()
-            try audioSession.setCategory(.playAndRecord, mode: .default)
-            try audioSession.setActive(true)
-            try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
-            _ = recorderPrepared()
-        } catch {
-            print("OOPS, something failed creating the audio Session")
-        }
     }
     
     func record(){

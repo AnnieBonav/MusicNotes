@@ -22,13 +22,6 @@ struct AudioRecordingView: View {
     
     var body: some View {
         NavigationStack() {
-            Label {
-                Text(audioRecordingData.dateCreated.formatted(date: .abbreviated, time: .shortened))
-            } icon: {
-                Image(systemName: "music.quarternote.3")
-            }.frame(maxWidth: .infinity, alignment: .leading)
-            
-            
             if (audioRecordingData.title != "") {
                 Text(audioRecordingData.title)
                     .font(.title3)
@@ -57,7 +50,7 @@ struct AudioRecordingView: View {
                                 audioPlayer!.play()
                             }
                         }
-                    }).tint(Color.accentColor).padding(.top)
+                    }).tint(Color.accentColor)
                 
                     HStack{
                         Button("",systemImage: "backward.end.circle.fill", action: rewindRecording)
@@ -66,17 +59,25 @@ struct AudioRecordingView: View {
                                 .buttonStyle(BorderlessButtonStyle()) // Added to prevent all HStack buttons being called
                         
                         Button("", systemImage: playerDelegate.isPlaying ? "pause.fill" : "play.fill", action: {
-                            playRecording(verbose: true)})
+                            playRecording()})
                                 .foregroundColor(Color.accentColor)
                                 .font(.title)
                                 .buttonStyle(BorderlessButtonStyle())
                         Spacer()
+                        Text(audioRecordingData.dateCreated.formatted(date: .abbreviated, time: .shortened))
+                        .foregroundStyle(.primary.opacity(0.8))
+
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding(.horizontal)
                     }
                 }
             }
             .background(.clear)
-            .onChange(of: playerDelegate.currentTime){oldTimeValue, newTimeValue in
+            .onChange(of: playerDelegate.currentTime) { oldTimeValue, newTimeValue in
                 handleTimeChange(currentTime: newTimeValue)
+            }
+            .onChange(of: playerDelegate.finishedPlaying) { oldValue, newValue in
+                handleFinishedPlaying(newValue: newValue)
             }
         }
         .contentShape(Rectangle())
@@ -102,13 +103,20 @@ struct AudioRecordingView: View {
         // TODO: Change so when timer ends playerDelegate go backs to beginning (can be inside Delegate)
     }
     
+    private func handleFinishedPlaying(newValue: Bool) {
+        if (newValue) {
+            rewindRecording()
+            playerDelegate.finishedPlaying = false
+        }
+    }
+    
     // Dismiss is called before OnDissapear from sheet
-    private func dismissSheet(){        
+    private func dismissSheet() {
         // Variables get saved from editing in sheet
-        audioRecordingData.title = saveTitle
-        audioRecordingData.details = saveDetails
+        audioRecordingData.title = saveTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        audioRecordingData.details = saveDetails.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        if (audioRecordingData.title == "Title"){
+        if (audioRecordingData.title == "Title") {
             audioRecordingData.title = ""
         }
         if (audioRecordingData.details == "Details") {
@@ -119,16 +127,32 @@ struct AudioRecordingView: View {
     }
     
     func handleSliderChange() {
-        let newTime = sliderValue * audioPlayer!.duration / 100
-        playerDelegate.rewindTo(audioPlayer: audioPlayer!, time: newTime)
+        guard let initializedAudioPlayer = audioPlayer
+        else {
+            initializePlaying()
+            guard let initializedAudioPlayer = audioPlayer
+            else{
+                return
+            }
+            let newTime = sliderValue * initializedAudioPlayer.duration / 100
+            playerDelegate.rewindTo(audioPlayer: initializedAudioPlayer, time: newTime)
+            return
+        }
+        
+        let newTime = sliderValue * initializedAudioPlayer.duration / 100
+        playerDelegate.rewindTo(audioPlayer: initializedAudioPlayer, time: newTime)
     }
     
     func handleTimeChange(currentTime: TimeInterval){
-        sliderValue = currentTime * 100 / audioPlayer!.duration
+        guard let initializedAudioPlayer = audioPlayer
+        else{
+            return
+        }
+        sliderValue = currentTime * 100 / initializedAudioPlayer.duration
     }
     
     // TODO: Implement pausing other audios when new is played
-    func playRecording(verbose: Bool = false){
+    func playRecording(){
         guard let audioPlayerInitialized = audioPlayer
         else{
             initializePlaying()
@@ -143,11 +167,9 @@ struct AudioRecordingView: View {
             audioPlayerInitialized.play()
             playerDelegate.startTimer(audioPlayer: audioPlayer!)
             playerDelegate.isPlaying = true
-            if (verbose) { print("IS Playing") }
         }else{
             audioPlayerInitialized.pause()
             playerDelegate.isPlaying = false
-            if (verbose) { print("NOT Playing") }
         }
     }
     
@@ -160,7 +182,7 @@ struct AudioRecordingView: View {
         playerDelegate.rewindTo(audioPlayer: audioPlayerInitialized, time: 0)
     }
     
-    func initializePlaying(verbose: Bool = false){
+    func initializePlaying(){
         guard let audioURL = URL(string: "\(currentDocumentPath)\(audioRecordingData.urlString)")
         else{
             print("ERROR: Audio URL could not be initialized")
@@ -171,9 +193,7 @@ struct AudioRecordingView: View {
             print("ERROR: File does not exist at URL \(audioURL.path)")
             return
         }
-        
-        if (verbose) { print("Audio URL: \(audioURL)\n") }
-        
+                
         do {
             _ = try audioURL.checkResourceIsReachable()
         }
@@ -190,8 +210,6 @@ struct AudioRecordingView: View {
         } catch {
             print("Error initializing AVAudioPlayer: \(error)")
         }
-        
-        if (verbose) { print("Initialized Audio Player. File: \(String(describing: audioPlayer!.url))") }
     }
 }
 

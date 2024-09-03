@@ -108,13 +108,22 @@ struct PageView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear(){
+            setupAudioSession()
             pageTitle = pageData.title
         }
         .onDisappear(){
             pageData.title = pageTitle
         }
-        .onTapGesture {
-            print("Tapped")
+    }
+    
+    private func setupAudioSession() {
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+            try audioSession.setCategory(.playAndRecord, mode: .default)
+            try audioSession.setActive(true)
+            try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
+        } catch {
+            print("OOPS, something failed creating the audio Session")
         }
     }
     
