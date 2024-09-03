@@ -32,6 +32,7 @@ struct PagesView: View {
                 } else {
                     ContentUnavailableView{
                         Label("You have nowhere to write yet", systemImage: "note")
+                            .imageScale(.large)
                     } description: {
                         Text("Start with a new Page!").font(.title)
                     } actions: {

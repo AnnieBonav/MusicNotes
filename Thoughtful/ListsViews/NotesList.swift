@@ -53,7 +53,6 @@ struct NotesList: View {
                         .buttonBorderShape(.circle)
                         .tint(.accentColor.opacity(0.6))
                         .foregroundColor(.accentColor)
-//                        Spacer()
                         
                         Button(action: {
                             addAudioRecordingDataFunc()

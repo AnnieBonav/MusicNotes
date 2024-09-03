@@ -31,7 +31,7 @@ struct AudioRecordingView: View {
             
             if (audioRecordingData.details != "") {
                 Text(audioRecordingData.details)
-                    .font(.caption)
+                    .font(.subheadline)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             
@@ -99,8 +99,6 @@ struct AudioRecordingView: View {
             .presentationBackgroundInteraction(.automatic)
             .padding()
         })
-            
-        // TODO: Change so when timer ends playerDelegate go backs to beginning (can be inside Delegate)
     }
     
     private func handleFinishedPlaying(newValue: Bool) {

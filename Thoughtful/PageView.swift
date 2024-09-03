@@ -60,6 +60,7 @@ struct PageView: View {
                     } else {
                         ContentUnavailableView{
                             Label("You have no notes yet", systemImage: "note.text")
+                                .imageScale(.large)
                         } description: {
                             Text("Add a text or audio!").font(.title)
                         } actions: {
