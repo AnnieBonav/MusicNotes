@@ -5,29 +5,12 @@ struct PagesView: View {
     @Environment(\.modelContext) var context
     @Query(sort: \PageData.lastModified) var pages: [PageData]
     
-    @State var noPages: Bool = true
     var body: some View {
         NavigationStack {
             Group {
                 if (!pages.isEmpty) {
                     VStack{
                         PagesList()
-                        // Other add option
-//                        HStack{
-//                            Spacer()
-//                            Button{
-//                                addPage()
-//                            } label: {
-//                                Label("", systemImage: "plus.circle.fill")
-//                                    .foregroundColor(.appBackground)
-//                                    .font(.largeTitle)
-//                            }
-//                            Spacer()
-//                        }
-//                        .padding(.top)
-//                        .background(Color.accentColor)
-//                        .frame(maxWidth: .infinity)
-//                        .ignoresSafeArea()
                     }.frame(maxWidth: .infinity)
                 } else {
                     ContentUnavailableView{
@@ -58,8 +41,6 @@ struct PagesView: View {
                     }) {
                         Label("Add Page", systemImage: "plus.circle.fill")
                     }
-                    .font(.largeTitle)
-                    .controlSize(.large)
                 }
             }
             .navigationTitle("All Pages")
@@ -70,18 +51,25 @@ struct PagesView: View {
             )
         }
     }
+}
+
+extension PagesView {
     
     private func addPage(){
         let newPage = PageData()
         context.insert(newPage)
+        newPage.notesData = []
     }
 }
 
-#Preview {
-    let preview = Preview(PageData.self)
-    let pages = PageData.mockPageData
+#Preview("Empty Pages View") {
+    SwiftDataViewer(preview: PreviewContainer(PageData.self)){
+        PagesView()
+    }
+}
 
-    preview.addExamples(pages)
-    return PagesView()
-        .modelContainer(preview.container)
+#Preview("Mock Pages View") {
+    SwiftDataViewer(preview: PreviewContainer(PageData.self), items: PageData.mockPageData){
+        PagesView()
+    }
 }
