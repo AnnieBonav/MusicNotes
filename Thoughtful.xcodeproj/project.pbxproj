@@ -19,10 +19,17 @@
 		D127D39F2C73BF49004C1486 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D39E2C73BF49004C1486 /* TextView.swift */; };
 		D127D3A12C73BF4A004C1486 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D127D3A02C73BF4A004C1486 /* Assets.xcassets */; };
 		D127D3A42C73BF4A004C1486 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D127D3A32C73BF4A004C1486 /* Preview Assets.xcassets */; };
-		D127D3AE2C73BF4A004C1486 /* MusicNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3AD2C73BF4A004C1486 /* MusicNotesTests.swift */; };
-		D127D3B82C73BF4A004C1486 /* MusicNotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3B72C73BF4A004C1486 /* MusicNotesUITests.swift */; };
-		D127D3BA2C73BF4A004C1486 /* MusicNotesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3B92C73BF4A004C1486 /* MusicNotesUITestsLaunchTests.swift */; };
+		D127D3AE2C73BF4A004C1486 /* ThoughtfulTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3AD2C73BF4A004C1486 /* ThoughtfulTests.swift */; };
+		D127D3B82C73BF4A004C1486 /* ThoughtfulUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3B72C73BF4A004C1486 /* ThoughtfulUITests.swift */; };
+		D127D3BA2C73BF4A004C1486 /* ThoughtfulUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3B92C73BF4A004C1486 /* ThoughtfulUITestsLaunchTests.swift */; };
 		D127D3C92C740CB3004C1486 /* PageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3C82C740CB3004C1486 /* PageData.swift */; };
+		D15317B32C8647870077690F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D15317B22C8647870077690F /* LaunchScreen.storyboard */; };
+		D15317B92C864D700077690F /* Launch_Bubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = D15317B82C864D700077690F /* Launch_Bubble2.png */; };
+		D15317BB2C864EAD0077690F /* Launch_Bubble1.png in Resources */ = {isa = PBXBuildFile; fileRef = D15317BA2C864EAD0077690F /* Launch_Bubble1.png */; };
+		D19BC7722C8A993900392373 /* PhotoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19BC7712C8A993900392373 /* PhotoData.swift */; };
+		D19BC7742C8A9A7100392373 /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19BC7732C8A9A7100392373 /* FileManagerExtension.swift */; };
+		D19BC7762C8AA65B00392373 /* SwiftDataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19BC7752C8AA65B00392373 /* SwiftDataContainer.swift */; };
+		D1A807842C8556CC00C9DD09 /* EditAudioRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A807832C8556CC00C9DD09 /* EditAudioRecordingView.swift */; };
 		D1DF567D2C77B86100253AF8 /* TextData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DF567C2C77B86100253AF8 /* TextData.swift */; };
 		D1DF567F2C7808F700253AF8 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DF567E2C7808F700253AF8 /* PreviewContainer.swift */; };
 		D1DF56812C78094100253AF8 /* TextMockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DF56802C78094100253AF8 /* TextMockData.swift */; };
@@ -60,18 +67,25 @@
 		D11ACB1B2C7A68D8009DC1FB /* AudioRecordingMockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingMockData.swift; sourceTree = "<group>"; };
 		D11ACB1D2C7BF8F9009DC1FB /* TextsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextsList.swift; sourceTree = "<group>"; };
 		D11ACB1F2C7BFA9A009DC1FB /* AudioRecordingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingsList.swift; sourceTree = "<group>"; };
-		D127D3972C73BF49004C1486 /* MusicNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D127D3972C73BF49004C1486 /* Thoughtful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thoughtful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D127D39A2C73BF49004C1486 /* ThoughtfulApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThoughtfulApp.swift; sourceTree = "<group>"; };
 		D127D39C2C73BF49004C1486 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		D127D39E2C73BF49004C1486 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		D127D3A02C73BF4A004C1486 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D127D3A32C73BF4A004C1486 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D127D3A92C73BF4A004C1486 /* MusicNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D127D3AD2C73BF4A004C1486 /* MusicNotesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicNotesTests.swift; sourceTree = "<group>"; };
-		D127D3B32C73BF4A004C1486 /* MusicNotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicNotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D127D3B72C73BF4A004C1486 /* MusicNotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicNotesUITests.swift; sourceTree = "<group>"; };
-		D127D3B92C73BF4A004C1486 /* MusicNotesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicNotesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D127D3A92C73BF4A004C1486 /* ThoughtfulTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThoughtfulTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D127D3AD2C73BF4A004C1486 /* ThoughtfulTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThoughtfulTests.swift; sourceTree = "<group>"; };
+		D127D3B32C73BF4A004C1486 /* ThoughtfulUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThoughtfulUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D127D3B72C73BF4A004C1486 /* ThoughtfulUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThoughtfulUITests.swift; sourceTree = "<group>"; };
+		D127D3B92C73BF4A004C1486 /* ThoughtfulUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThoughtfulUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D127D3C82C740CB3004C1486 /* PageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageData.swift; sourceTree = "<group>"; };
+		D15317B22C8647870077690F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D15317B82C864D700077690F /* Launch_Bubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Launch_Bubble2.png; sourceTree = "<group>"; };
+		D15317BA2C864EAD0077690F /* Launch_Bubble1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Launch_Bubble1.png; sourceTree = "<group>"; };
+		D19BC7712C8A993900392373 /* PhotoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoData.swift; sourceTree = "<group>"; };
+		D19BC7732C8A9A7100392373 /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
+		D19BC7752C8AA65B00392373 /* SwiftDataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataContainer.swift; sourceTree = "<group>"; };
+		D1A807832C8556CC00C9DD09 /* EditAudioRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAudioRecordingView.swift; sourceTree = "<group>"; };
 		D1DF567C2C77B86100253AF8 /* TextData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextData.swift; sourceTree = "<group>"; };
 		D1DF567E2C7808F700253AF8 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
 		D1DF56802C78094100253AF8 /* TextMockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMockData.swift; sourceTree = "<group>"; };
@@ -112,9 +126,9 @@
 		D127D38E2C73BF49004C1486 = {
 			isa = PBXGroup;
 			children = (
-				D127D3992C73BF49004C1486 /* MusicNotes */,
-				D127D3AC2C73BF4A004C1486 /* MusicNotesTests */,
-				D127D3B62C73BF4A004C1486 /* MusicNotesUITests */,
+				D127D3992C73BF49004C1486 /* Thoughtful */,
+				D127D3AC2C73BF4A004C1486 /* ThoughtfulTests */,
+				D127D3B62C73BF4A004C1486 /* ThoughtfulUITests */,
 				D127D3982C73BF49004C1486 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -122,18 +136,21 @@
 		D127D3982C73BF49004C1486 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D127D3972C73BF49004C1486 /* MusicNotes.app */,
-				D127D3A92C73BF4A004C1486 /* MusicNotesTests.xctest */,
-				D127D3B32C73BF4A004C1486 /* MusicNotesUITests.xctest */,
+				D127D3972C73BF49004C1486 /* Thoughtful.app */,
+				D127D3A92C73BF4A004C1486 /* ThoughtfulTests.xctest */,
+				D127D3B32C73BF4A004C1486 /* ThoughtfulUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D127D3992C73BF49004C1486 /* MusicNotes */ = {
+		D127D3992C73BF49004C1486 /* Thoughtful */ = {
 			isa = PBXGroup;
 			children = (
+				D15317BA2C864EAD0077690F /* Launch_Bubble1.png */,
+				D15317B82C864D700077690F /* Launch_Bubble2.png */,
 				D127D3CD2C741703004C1486 /* NotesViews */,
 				D127D3CA2C740CBC004C1486 /* DataModels */,
+				D15317B22C8647870077690F /* LaunchScreen.storyboard */,
 				D127D39A2C73BF49004C1486 /* ThoughtfulApp.swift */,
 				D1E516C32C84169200FE1B33 /* PagesView.swift */,
 				D127D39C2C73BF49004C1486 /* PageView.swift */,
@@ -143,7 +160,7 @@
 				D1E516BC2C840C4400FE1B33 /* MockData */,
 				D1E516BD2C840C6000FE1B33 /* Helpers */,
 			);
-			path = MusicNotes;
+			path = Thoughtful;
 			sourceTree = "<group>";
 		};
 		D127D3A22C73BF4A004C1486 /* Preview Content */ = {
@@ -154,21 +171,21 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		D127D3AC2C73BF4A004C1486 /* MusicNotesTests */ = {
+		D127D3AC2C73BF4A004C1486 /* ThoughtfulTests */ = {
 			isa = PBXGroup;
 			children = (
-				D127D3AD2C73BF4A004C1486 /* MusicNotesTests.swift */,
+				D127D3AD2C73BF4A004C1486 /* ThoughtfulTests.swift */,
 			);
-			path = MusicNotesTests;
+			path = ThoughtfulTests;
 			sourceTree = "<group>";
 		};
-		D127D3B62C73BF4A004C1486 /* MusicNotesUITests */ = {
+		D127D3B62C73BF4A004C1486 /* ThoughtfulUITests */ = {
 			isa = PBXGroup;
 			children = (
-				D127D3B72C73BF4A004C1486 /* MusicNotesUITests.swift */,
-				D127D3B92C73BF4A004C1486 /* MusicNotesUITestsLaunchTests.swift */,
+				D127D3B72C73BF4A004C1486 /* ThoughtfulUITests.swift */,
+				D127D3B92C73BF4A004C1486 /* ThoughtfulUITestsLaunchTests.swift */,
 			);
-			path = MusicNotesUITests;
+			path = ThoughtfulUITests;
 			sourceTree = "<group>";
 		};
 		D127D3CA2C740CBC004C1486 /* DataModels */ = {
@@ -178,6 +195,7 @@
 				D1DF567C2C77B86100253AF8 /* TextData.swift */,
 				D1DF66542C7E8FA900D47D37 /* NoteData.swift */,
 				D127D3C82C740CB3004C1486 /* PageData.swift */,
+				D19BC7712C8A993900392373 /* PhotoData.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -189,6 +207,7 @@
 				D11ACB192C7A653B009DC1FB /* AudioRecordingView.swift */,
 				D127D39E2C73BF49004C1486 /* TextView.swift */,
 				D1DF66502C7E8B9B00D47D37 /* NoteView.swift */,
+				D1A807832C8556CC00C9DD09 /* EditAudioRecordingView.swift */,
 			);
 			path = NotesViews;
 			sourceTree = "<group>";
@@ -209,6 +228,8 @@
 				D1DF567E2C7808F700253AF8 /* PreviewContainer.swift */,
 				D1DF664E2C7D134500D47D37 /* AudioPlayerDelegate.swift */,
 				D1DF66522C7E8E2900D47D37 /* ColorExtension.swift */,
+				D19BC7732C8A9A7100392373 /* FileManagerExtension.swift */,
+				D19BC7752C8AA65B00392373 /* SwiftDataContainer.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -227,9 +248,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D127D3962C73BF49004C1486 /* MusicNotes */ = {
+		D127D3962C73BF49004C1486 /* Thoughtful */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D127D3BD2C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "MusicNotes" */;
+			buildConfigurationList = D127D3BD2C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "Thoughtful" */;
 			buildPhases = (
 				D127D3932C73BF49004C1486 /* Sources */,
 				D127D3942C73BF49004C1486 /* Frameworks */,
@@ -239,14 +260,14 @@
 			);
 			dependencies = (
 			);
-			name = MusicNotes;
+			name = Thoughtful;
 			productName = MusicNotes;
-			productReference = D127D3972C73BF49004C1486 /* MusicNotes.app */;
+			productReference = D127D3972C73BF49004C1486 /* Thoughtful.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D127D3A82C73BF4A004C1486 /* MusicNotesTests */ = {
+		D127D3A82C73BF4A004C1486 /* ThoughtfulTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D127D3C02C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "MusicNotesTests" */;
+			buildConfigurationList = D127D3C02C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "ThoughtfulTests" */;
 			buildPhases = (
 				D127D3A52C73BF4A004C1486 /* Sources */,
 				D127D3A62C73BF4A004C1486 /* Frameworks */,
@@ -257,14 +278,14 @@
 			dependencies = (
 				D127D3AB2C73BF4A004C1486 /* PBXTargetDependency */,
 			);
-			name = MusicNotesTests;
+			name = ThoughtfulTests;
 			productName = MusicNotesTests;
-			productReference = D127D3A92C73BF4A004C1486 /* MusicNotesTests.xctest */;
+			productReference = D127D3A92C73BF4A004C1486 /* ThoughtfulTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		D127D3B22C73BF4A004C1486 /* MusicNotesUITests */ = {
+		D127D3B22C73BF4A004C1486 /* ThoughtfulUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D127D3C32C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "MusicNotesUITests" */;
+			buildConfigurationList = D127D3C32C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "ThoughtfulUITests" */;
 			buildPhases = (
 				D127D3AF2C73BF4A004C1486 /* Sources */,
 				D127D3B02C73BF4A004C1486 /* Frameworks */,
@@ -275,9 +296,9 @@
 			dependencies = (
 				D127D3B52C73BF4A004C1486 /* PBXTargetDependency */,
 			);
-			name = MusicNotesUITests;
+			name = ThoughtfulUITests;
 			productName = MusicNotesUITests;
-			productReference = D127D3B32C73BF4A004C1486 /* MusicNotesUITests.xctest */;
+			productReference = D127D3B32C73BF4A004C1486 /* ThoughtfulUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -303,7 +324,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D127D3922C73BF49004C1486 /* Build configuration list for PBXProject "MusicNotes" */;
+			buildConfigurationList = D127D3922C73BF49004C1486 /* Build configuration list for PBXProject "Thoughtful" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -316,9 +337,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D127D3962C73BF49004C1486 /* MusicNotes */,
-				D127D3A82C73BF4A004C1486 /* MusicNotesTests */,
-				D127D3B22C73BF4A004C1486 /* MusicNotesUITests */,
+				D127D3962C73BF49004C1486 /* Thoughtful */,
+				D127D3A82C73BF4A004C1486 /* ThoughtfulTests */,
+				D127D3B22C73BF4A004C1486 /* ThoughtfulUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -328,6 +349,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D15317B32C8647870077690F /* LaunchScreen.storyboard in Resources */,
+				D15317BB2C864EAD0077690F /* Launch_Bubble1.png in Resources */,
+				D15317B92C864D700077690F /* Launch_Bubble2.png in Resources */,
 				D127D3A42C73BF4A004C1486 /* Preview Assets.xcassets in Resources */,
 				D127D3A12C73BF4A004C1486 /* Assets.xcassets in Resources */,
 			);
@@ -360,12 +384,15 @@
 				D11ACB1A2C7A653B009DC1FB /* AudioRecordingView.swift in Sources */,
 				D1DF66532C7E8E2900D47D37 /* ColorExtension.swift in Sources */,
 				D11ACB182C792B13009DC1FB /* AudioRecordingData.swift in Sources */,
+				D19BC7722C8A993900392373 /* PhotoData.swift in Sources */,
 				D11ACB1E2C7BF8F9009DC1FB /* TextsList.swift in Sources */,
 				D127D3C92C740CB3004C1486 /* PageData.swift in Sources */,
 				D1E516C22C840F8500FE1B33 /* PageMockData.swift in Sources */,
 				D1DF567D2C77B86100253AF8 /* TextData.swift in Sources */,
 				D1DF56812C78094100253AF8 /* TextMockData.swift in Sources */,
+				D19BC7742C8A9A7100392373 /* FileManagerExtension.swift in Sources */,
 				D11ACB1C2C7A68D8009DC1FB /* AudioRecordingMockData.swift in Sources */,
+				D19BC7762C8AA65B00392373 /* SwiftDataContainer.swift in Sources */,
 				D127D39D2C73BF49004C1486 /* PageView.swift in Sources */,
 				D1DF66552C7E8FA900D47D37 /* NoteData.swift in Sources */,
 				D127D39F2C73BF49004C1486 /* TextView.swift in Sources */,
@@ -373,6 +400,7 @@
 				D10A696B2C7EAAE6009316E3 /* NotesList.swift in Sources */,
 				D127D39B2C73BF49004C1486 /* ThoughtfulApp.swift in Sources */,
 				D1DF664F2C7D134500D47D37 /* AudioPlayerDelegate.swift in Sources */,
+				D1A807842C8556CC00C9DD09 /* EditAudioRecordingView.swift in Sources */,
 				D11ACB202C7BFA9A009DC1FB /* AudioRecordingsList.swift in Sources */,
 				D1E516C42C84169200FE1B33 /* PagesView.swift in Sources */,
 			);
@@ -382,7 +410,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D127D3AE2C73BF4A004C1486 /* MusicNotesTests.swift in Sources */,
+				D127D3AE2C73BF4A004C1486 /* ThoughtfulTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,8 +418,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D127D3BA2C73BF4A004C1486 /* MusicNotesUITestsLaunchTests.swift in Sources */,
-				D127D3B82C73BF4A004C1486 /* MusicNotesUITests.swift in Sources */,
+				D127D3BA2C73BF4A004C1486 /* ThoughtfulUITestsLaunchTests.swift in Sources */,
+				D127D3B82C73BF4A004C1486 /* ThoughtfulUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,12 +428,12 @@
 /* Begin PBXTargetDependency section */
 		D127D3AB2C73BF4A004C1486 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D127D3962C73BF49004C1486 /* MusicNotes */;
+			target = D127D3962C73BF49004C1486 /* Thoughtful */;
 			targetProxy = D127D3AA2C73BF4A004C1486 /* PBXContainerItemProxy */;
 		};
 		D127D3B52C73BF4A004C1486 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D127D3962C73BF49004C1486 /* MusicNotes */;
+			target = D127D3962C73BF49004C1486 /* Thoughtful */;
 			targetProxy = D127D3B42C73BF4A004C1486 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -538,17 +566,18 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"MusicNotes/Preview Content\"";
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_ASSET_PATHS = "\"Thoughtful/Preview Content\"";
 				DEVELOPMENT_TEAM = R29TNYNNM3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MusicNotes/Info.plist;
+				INFOPLIST_FILE = Thoughtful/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "thoughtful: home for all notes";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "MusicNotes requires microphone usage.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "thoughtful: home for all notes requires microphone usage.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -573,17 +602,18 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"MusicNotes/Preview Content\"";
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_ASSET_PATHS = "\"Thoughtful/Preview Content\"";
 				DEVELOPMENT_TEAM = R29TNYNNM3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MusicNotes/Info.plist;
+				INFOPLIST_FILE = Thoughtful/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "thoughtful: home for all notes";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "MusicNotes requires microphone usage.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "thoughtful: home for all notes requires microphone usage.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -616,7 +646,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MusicNotes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MusicNotes";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Thoughtful.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Thoughtful";
 			};
 			name = Debug;
 		};
@@ -636,7 +666,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MusicNotes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MusicNotes";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Thoughtful.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Thoughtful";
 			};
 			name = Release;
 		};
@@ -679,7 +709,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D127D3922C73BF49004C1486 /* Build configuration list for PBXProject "MusicNotes" */ = {
+		D127D3922C73BF49004C1486 /* Build configuration list for PBXProject "Thoughtful" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D127D3BB2C73BF4A004C1486 /* Debug */,
@@ -688,7 +718,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D127D3BD2C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "MusicNotes" */ = {
+		D127D3BD2C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "Thoughtful" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D127D3BE2C73BF4A004C1486 /* Debug */,
@@ -697,7 +727,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D127D3C02C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "MusicNotesTests" */ = {
+		D127D3C02C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "ThoughtfulTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D127D3C12C73BF4A004C1486 /* Debug */,
@@ -706,7 +736,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D127D3C32C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "MusicNotesUITests" */ = {
+		D127D3C32C73BF4A004C1486 /* Build configuration list for PBXNativeTarget "ThoughtfulUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D127D3C42C73BF4A004C1486 /* Debug */,
