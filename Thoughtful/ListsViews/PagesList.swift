@@ -13,8 +13,8 @@ struct PagesList: View {
     @Environment(\.modelContext) var context
     @Query(sort: \PageData.lastModified) var pages: [PageData]
     
-    @State private var confirmDelete: Bool = false
     @State private var savedIndexSet: IndexSet?
+    @State private var showingDeleteAlert: Bool = false
     var body: some View {
         List{
             Section(content: {
@@ -35,14 +35,28 @@ struct PagesList: View {
                     .isDetailLink(false)
                     .tint(.primary)
                 }
-                // TODO: Add confirm delete
                 .onDelete { indexSet in
                     savedIndexSet = indexSet
-                    deletePage()
+                    showingDeleteAlert = true
                 }
+                .alert(
+                    isPresented: $showingDeleteAlert
+                ) {
+                    let pageString = savedIndexSet?.count == 1 ?
+                    """
+                    \n"\(pages[savedIndexSet!.first!].title)"
+                    """ : "multiple pages"
+                    return Alert(title: Text("Confirm delete"),
+                        message: Text("Are you sure you want to delete \(pageString)?"),
+                        primaryButton: .destructive(Text("Delete")) {
+                            deletePage()
+                        },
+                        secondaryButton: .cancel() {
+                            savedIndexSet = nil
+                        })
+                    }
                 .listRowBackground(PageBackground())
             })
-            .listRowSpacing(20)
             .listRowSeparatorTint(.white)
         }
         .scrollContentBackground(.hidden)

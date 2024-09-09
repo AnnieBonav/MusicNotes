@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-// Simple way of showing a preview.
+// Simple way of showing a preview with persistent data inStoredMemory
 struct Preview {
     let container: ModelContainer
     init(_ models: any PersistentModel.Type...) {

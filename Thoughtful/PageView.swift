@@ -2,6 +2,25 @@ import SwiftUI
 import SwiftData
 import AVFAudio
 
+struct ActionButton: View {
+    let action: () -> Void
+    let imageName: String
+    
+    var body: some View {
+        Button (action: {
+            action()
+        }) { Image(systemName: "\(imageName)")
+                .font(.largeTitle)
+        }
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.circle)
+        .controlSize(.large)
+        .font(.title2)
+        .tint(.accentColor.opacity(0.6))
+        .foregroundColor(.accentColor)
+    }
+}
+
 struct PageView: View {
     @Environment(\.modelContext) private var context
     @Query var notesData: [NoteData]
@@ -33,30 +52,6 @@ struct PageView: View {
                 VStack{
                     if(!notesData.isEmpty){
                         NotesList(notesData: notesData, addTextDataFunc: addTextData, addAudioRecordingDataFunc: toggleShowRecordingSheet)
-                        
-                        // OTHER BUTTONS OPTION
-//                        HStack{
-//                            Spacer()
-//                            Button(action: {
-//                                addTextData()
-//                            }) {
-//                                Image(systemName: "plus.circle.fill")
-//                                    .foregroundColor(.appBackground)
-//                                    .font(.largeTitle)
-//                            }
-//                            Button(action: {
-//                                showRecordingSheet = true
-//                            }) {
-//                                Image(systemName: "record.circle.fill")
-//                                    .foregroundColor(.appBackground)
-//                                    .font(.largeTitle)
-//                            }
-//                            Spacer()
-//                        }
-//                        .padding(.top)
-//                        .background(Color.accentColor)
-//                        .frame(maxWidth: .infinity)
-//                        .ignoresSafeArea()
                     } else {
                         ContentUnavailableView{
                             Label("You have no notes yet", systemImage: "note.text")
@@ -65,38 +60,15 @@ struct PageView: View {
                             Text("Add a text or audio!").font(.title)
                         } actions: {
                             HStack {
-                                Button (action: {
-                                    addTextData()
-                                }) { Image(systemName: "square.and.pencil.circle")
-                                        .font(.largeTitle)
-                                }
-                                .buttonStyle(.bordered)
-                                .buttonBorderShape(.circle)
-                                .controlSize(.large)
-                                .font(.title2)
-                                .tint(.accentColor.opacity(0.6))
-                                .foregroundColor(.accentColor)
-                                
-                                Button (action: {
-                                    toggleShowRecordingSheet()
-                                }) { Image(systemName: "waveform.circle")
-                                        .font(.largeTitle)
-                                }
-                                .buttonStyle(.bordered)
-                                .buttonBorderShape(.circle)
-                                .controlSize(.large)
-                                .font(.title2)
-                                .tint(.accentColor.opacity(0.6))
-                                .foregroundColor(.accentColor)
+                                ActionButton(action: addTextData, imageName: "square.and.pencil.circle")
+                                ActionButton(action: toggleShowRecordingSheet, imageName: "waveform.circle")
                             }
                             .padding(.bottom, 40)
                         }
                     }
                     
                 }
-                .sheet(isPresented: $showRecordingSheet, onDismiss: {
-                    dismissAudioSheet()
-                }, content: {
+                .sheet(isPresented: $showRecordingSheet, content: {
                     NavigationStack {
                         RecordAudioView(pageData: pageData, showRecordingSheet: $showRecordingSheet)
                     }
@@ -126,10 +98,6 @@ struct PageView: View {
         } catch {
             print("OOPS, something failed creating the audio Session")
         }
-    }
-    
-    private func dismissAudioSheet(){
-        print("Dismissed")
     }
     
     func addTextData() {

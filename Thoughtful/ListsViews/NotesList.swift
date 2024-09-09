@@ -12,15 +12,10 @@ struct NoteBackground: View {
 // Is the overall render of all NotesTypes. Serves as body of a single app Page.
 struct NotesList: View {
     @Environment(\.modelContext) var context
-    let notesData: [NoteData]
+    let notesData: [NoteData] // Adding state makes it not update anymore
+    
     let addTextDataFunc: () -> Void
     let addAudioRecordingDataFunc: () -> Void
-    
-    init(notesData: [NoteData], addTextDataFunc: @escaping () -> Void, addAudioRecordingDataFunc: @escaping () -> Void) {
-        self.notesData = notesData
-        self.addTextDataFunc = addTextDataFunc
-        self.addAudioRecordingDataFunc = addAudioRecordingDataFunc
-    }
     
     let columnLayout = Array(repeating: GridItem(), count: 1)
     
@@ -30,9 +25,16 @@ struct NotesList: View {
                 Section(content: {
                     ForEach(notesData, id: \.self) { noteData in
                         NoteView(noteData: noteData, textData: noteData.textData, audioRecordingData: noteData.audioRecordingData)
-                    } // Handles delete directly on notes Views to make sure all binded values get reset (textData.userText)
+                    }
+                    .onMove(perform: { indices, newOffset in
+                        var tempNotesData = notesData.sorted(by: { $0.notePosition < $1.notePosition })
+                        tempNotesData.move(fromOffsets: indices, toOffset: newOffset)
+                        for (index, noteData) in tempNotesData.enumerated() {
+                            noteData.notePosition = index
+                        }
+                     })
+                    // Handles delete directly on notes Views to make sure all binded values get reset (textData.userText)
                     .listRowSeparator(.hidden)
-                    
                     HStack{
                         Spacer()
                         Button(action: {
