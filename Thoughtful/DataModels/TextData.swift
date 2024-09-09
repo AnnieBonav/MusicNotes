@@ -31,7 +31,8 @@ final class TextData {
         self.fontSize = fontSize
     }
     
-    var noteData: NoteData? // For inverse relationship to NoteData
+    @Relationship(deleteRule: .cascade)
+    var noteData: NoteData?
 }
 
 enum FontSize: String, Codable, CaseIterable {

@@ -8,7 +8,8 @@ final class PageData{
     var title: String
     var dateCreated: Date
     var lastModified: Date
-    @Relationship(deleteRule: .cascade)
+    
+    @Relationship(deleteRule: .cascade, inverse: \NoteData.pageData)
     var notesData: [NoteData]? 
     
     init(pageId: UUID = UUID(),

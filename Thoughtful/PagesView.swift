@@ -63,13 +63,13 @@ extension PagesView {
 }
 
 #Preview("Empty Pages View") {
-    SwiftDataViewer(preview: PreviewContainer(PageData.self)){
+    SwiftDataViewer(preview: Preview(PageData.self)){
         PagesView()
     }
 }
 
 #Preview("Mock Pages View") {
-    SwiftDataViewer(preview: PreviewContainer(PageData.self), items: PageData.mockPageData){
+    SwiftDataViewer(preview: Preview(PageData.self), items: PageData.mockPageData){
         PagesView()
     }
 }

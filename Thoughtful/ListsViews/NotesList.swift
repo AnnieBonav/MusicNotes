@@ -29,15 +29,8 @@ struct NotesList: View {
             List {
                 Section(content: {
                     ForEach(notesData, id: \.self) { noteData in
-                        NoteView(noteData: noteData, textData: noteData.textData!, audioRecordingData: noteData.audioRecordingData!)
-                    }
-                    .onDelete { indexSet in
-                        withAnimation {
-                            for index in indexSet {
-                                context.delete(notesData[index])
-                            }
-                        }
-                    }
+                        NoteView(noteData: noteData, textData: noteData.textData, audioRecordingData: noteData.audioRecordingData)
+                    } // Handles delete directly on notes Views to make sure all binded values get reset (textData.userText)
                     .listRowSeparator(.hidden)
                     
                     HStack{

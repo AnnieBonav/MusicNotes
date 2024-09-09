@@ -22,5 +22,6 @@ final class AudioRecordingData {
         self.urlString = urlString
     }
     
-    var noteData: NoteData? // For inverse relationship to NoteData
+    @Relationship(deleteRule: .cascade)
+    var noteData: NoteData?
 }

@@ -4,6 +4,7 @@ import SwiftData
 
 // Shows the AudioRecordingData, handles playing interactions/
 struct AudioRecordingView: View {
+    @Environment(\.modelContext) var context
     @Bindable var audioRecordingData: AudioRecordingData
     @State private var audioPlayer: AVAudioPlayer?
     @ObservedObject private var playerDelegate = AudioPlayerDelegate()
@@ -78,6 +79,13 @@ struct AudioRecordingView: View {
             }
             .onChange(of: playerDelegate.finishedPlaying) { oldValue, newValue in
                 handleFinishedPlaying(newValue: newValue)
+            }
+        }
+        .swipeActions {
+            Button("Delete", role: .destructive) {
+                withAnimation {
+                    context.delete(audioRecordingData)
+                }
             }
         }
         .contentShape(Rectangle())

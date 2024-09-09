@@ -3,11 +3,11 @@ import SwiftUI
 
 struct SwiftDataViewer<Content: View>: View {
     private let content: Content
-    private let preview: PreviewContainer
+    private let preview: Preview
     private let items: [any PersistentModel]?
     
     init(
-        preview: PreviewContainer,
+        preview: Preview,
         items: [any PersistentModel]? = nil,
         @ViewBuilder _ content: () -> Content
     ) {

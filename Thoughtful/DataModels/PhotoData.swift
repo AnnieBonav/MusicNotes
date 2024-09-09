@@ -1,6 +1,10 @@
 import SwiftData
 import Foundation
 
+enum Location: String, Codable {
+    case resources, documents
+}
+
 @Model
 final class PhotoData{
     var fileName: String?

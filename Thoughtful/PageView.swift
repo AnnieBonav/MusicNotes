@@ -135,9 +135,13 @@ struct PageView: View {
     func addTextData() {
         withAnimation {
             let newTextData = TextData()
-            let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData!.count, noteType: NoteType.text, textData: newTextData)
+            context.insert(newTextData)
             
+            let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData!.count, noteType: NoteType.text, textData: newTextData)
             context.insert(note)
+            
+            newTextData.noteData = note
+            note.pageData = pageData
         }
     }
     

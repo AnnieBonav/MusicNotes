@@ -139,9 +139,15 @@ struct RecordAudioView: View {
         
         let newAudioRecordingData = AudioRecordingData(urlString: audioRecordingURL!.lastPathComponent)
         
+        context.insert(newAudioRecordingData)
+        
         let note = NoteData(pageId: pageData.pageId, notePosition: pageData.notesData!.count, noteType: NoteType.audioRecording, audioRecordingData: newAudioRecordingData)
         
         context.insert(note)
+        newAudioRecordingData.noteData = note // Without adding the Audio Recording first, it creates a duplicate registration attempt
+        
+        note.pageData = pageData
+        
         showRecordingSheet = false
     }
     

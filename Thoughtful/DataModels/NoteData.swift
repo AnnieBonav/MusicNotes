@@ -13,17 +13,18 @@ final class NoteData {
     var noteType: NoteType
     var pageId: UUID
     
-//    @Relationship(deleteRule: .cascade)
+    @Relationship(deleteRule: .cascade, inverse: \TextData.noteData)
     var textData: TextData?
-//    @Relationship(deleteRule: .cascade)
+    
+    @Relationship(deleteRule: .cascade, inverse: \AudioRecordingData.noteData)
     var audioRecordingData: AudioRecordingData?
     
     init(
         pageId: UUID,
         notePosition: Int = Int.min,
         noteType: NoteType,
-        textData: TextData = TextData(),
-        audioRecordingData: AudioRecordingData = AudioRecordingData(urlString: "")) {
+        textData: TextData? = nil,
+        audioRecordingData: AudioRecordingData? = nil) {
         
             self.pageId = pageId
             self.notePosition = notePosition
@@ -33,5 +34,6 @@ final class NoteData {
             self.audioRecordingData = audioRecordingData
     }
     
-    var pageData: PageData? // For inverse relationship to PageData
+    @Relationship(deleteRule: .nullify)
+    var pageData: PageData?
 }

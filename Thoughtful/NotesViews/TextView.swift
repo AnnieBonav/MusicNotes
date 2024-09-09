@@ -4,6 +4,7 @@ import SwiftUI
 
 // Shows the TextData with an edit field and handles interactions like size change.
 struct TextView: View {
+    @Environment(\.modelContext) var context
     @Bindable var textData: TextData
         
     var placeHolderText = "Write Something!"
@@ -11,7 +12,7 @@ struct TextView: View {
     @State private var isEditing = false
     
     var body: some View {
-        VStack{
+        VStack {
             VStack(alignment: .leading) {
                 TextEditor(text: $textData.userText)
                     .font(.system(size: textData.fontSize.value))
@@ -52,7 +53,7 @@ struct TextView: View {
                     }
                     .frame(maxWidth: .infinity,  alignment: .center)
                 }
-            }.onAppear{
+            }.onAppear {
                 let originalFs = textData.fontSize
                 textData.fontSize = .medium
                 textData.fontSize = originalFs
@@ -65,6 +66,14 @@ struct TextView: View {
                 }
                 
                 textData.fontSize = .medium
+            }
+            .swipeActions {
+                Button("Delete", role: .destructive) {
+                    textData.userText = "" // Need to delete because the value is in _binding_ mode
+                    withAnimation {
+                        context.delete(textData)
+                    }
+                }
             }
         }
         .background(.clear)
